@@ -18,6 +18,8 @@ namespace SkiApp
                 });
             builder.Services.AddSingleton<LogInPage>();
             builder.Services.AddSingleton<LogInViewModel>();
+            builder.Services.AddSingleton<SignUpViewModel>();
+            builder.Services.AddSingleton<SignUp>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

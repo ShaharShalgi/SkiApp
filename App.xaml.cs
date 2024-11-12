@@ -4,11 +4,11 @@ namespace SkiApp
 {
     public partial class App : Application
     {
-        public App(LogInViewModel vm)
+        public App()
         {
             InitializeComponent();
 
-            MainPage = new LogInPage(vm);
+            MainPage = new AppShell();
         }
     }
 }

@@ -4,9 +4,158 @@
              x:Class="SkiApp.Views.SignUp"
              Title="SignUp">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+      <Label
+           Text="Select user type"
+           HorizontalOptions="Center"
+           FontSize="20"
+           Margin="0,0,0,20"
+            />
+
+
+      <Grid ColumnDefinitions="1*" RowDefinitions="1*,1*,1*,1*">
+
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0">
+          <!--Professional selection-->
+          <VerticalStackLayout Spacing="5">
+
+            <Button
+                x:Name="ProfessionalDot"
+                HeightRequest="24"
+                WidthRequest="24"
+                CornerRadius="12"
+                Padding="0"
+                BorderColor="Gray"
+                BackgroundColor="Purple"
+                Command="{Binding ProffesionalSelectedCommand}"
+                      
+                        >
+
+            </Button>
+            <Label
+                Text="Professional"
+                FontSize="14"
+                HorizontalOptions="Center" />
+          </VerticalStackLayout>
+
+
+
+          <!--Visitor Selection-->
+
+          <VerticalStackLayout Spacing="5">
+            <Button
+     x:Name="VisitorDot"
+     HeightRequest="24"
+     WidthRequest="24"
+     CornerRadius="12"
+     Padding="0"
+     BorderColor="Gray"
+     BackgroundColor="Purple"
+     Command="{Binding VisitorSelectedCommand}"
+           
+                         
+                        >
+
+            </Button>
+            <Label
+     Text="Visitor"
+     FontSize="14"
+     HorizontalOptions="Center" />
+          </VerticalStackLayout>
+
+
+
+
+        </HorizontalStackLayout>
+
+        <!--common fields for both-->
+        <VerticalStackLayout Spacing="15" Margin="0,20,0,0" Grid.Row="1">
+          <Entry
+ x:Name="UsernameEntry"
+ Placeholder="Username"
+              Text="{Binding Username}"
+ Margin="0,20,0,0" />
+
+          <Entry
+ x:Name="PasswordEntry"
+ Placeholder="Password"
+              Text="{Binding Password}"
+ IsPassword="True" />
+
+          <Entry
+ x:Name="ConfirmPasswordEntry"
+ Placeholder="Confirm Password"
+ IsPassword="True" />
+          <Entry
+            x:Name="EmailEntry"
+            Placeholder="Email"
+            Text="{Binding Email}"
+            />
+          <Picker
+  x:Name="GenderPicker"
+  Title="Gender"
+                    >
+            <Picker.Items
+                        >
+              <x:String>Male</x:String>
+              <x:String>Female</x:String>
+              <x:String>Other</x:String>
+             
+            </Picker.Items>
+          </Picker>
+        </VerticalStackLayout>
+
+        <!--only Professional fields-->
+        <!--IsVisible="{Binding IsProfessionalVisible}" - add this to see if manager is chosen-->
+        <VerticalStackLayout
+   Grid.Row="2"
+   x:Name="ProfessionalFields"
+  IsVisible="{Binding IsProfessional}"
+   Spacing="15">
+          <Entry
+ x:Name="LocEntry"
+ Placeholder="Loc"
+                   
+                    
+                    />
+
+          <Entry
+ x:Name="PriceEntry"
+ Placeholder="Price"
+                    
+                    />
+          <Entry
+x:Name="TextEntry"
+Placeholder="Text"
+                    
+                    />
+
+
+
+
+          <Picker
+ x:Name="TypePicker"
+ Title="Type of Proffesion"
+                    >
+            <Picker.Items
+                        >
+              <x:String>Coach</x:String>
+              <x:String>Manager</x:String>
+              
+            </Picker.Items>
+          </Picker>
+        </VerticalStackLayout>
+
+        <!--submit button-->
+        <Button
+            Grid.Row="3"
+            x:Name="RegisterButton"
+            Text="Submit"
+               
+            WidthRequest="200"
+            HorizontalOptions="Center"
+            Margin="0,20,0,0" />
+
+      </Grid>
+
     </VerticalStackLayout>
 </ContentPage>
