@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SkiApp.ViewModels"
+             x:DataType="viewModels:SignUpViewModel"
              x:Class="SkiApp.Views.SignUp"
              Title="SignUp">
+    <ScrollView>
     <VerticalStackLayout>
       <Label
            Text="Select user type"
@@ -26,7 +29,7 @@
                 Padding="0"
                 BorderColor="Gray"
                 BackgroundColor="Purple"
-                Command="{Binding ProffesionalSelectedCommand}"
+                Command="{Binding ProfessionalSelectedCommand}"
                       
                         >
 
@@ -88,7 +91,7 @@
           <Entry
             x:Name="EmailEntry"
             Placeholder="Email"
-            Text="{Binding Email}"
+            
             />
           <Picker
   x:Name="GenderPicker"
@@ -134,7 +137,7 @@ Placeholder="Text"
 
           <Picker
  x:Name="TypePicker"
- Title="Type of Proffesion"
+ Title="Type of Profession"
                     >
             <Picker.Items
                         >
@@ -158,4 +161,5 @@ Placeholder="Text"
       </Grid>
 
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

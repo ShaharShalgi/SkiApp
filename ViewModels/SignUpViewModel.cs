@@ -79,21 +79,21 @@ public class SignUpViewModel : ViewModelBase
     }
 
     //נחבר את זה לכפתורים
-    public ICommand ProffesionalSelectedCommand { get; set; }
+    public ICommand ProfessionalSelectedCommand { get; set; }
     public ICommand VisitorSelectedCommand { get; set; }
 
 
 
     //נחבר את זה אם המנהל הוא האופציה הנבחרת
-    private bool isProffesional;
-    public bool IsProffesional
+    private bool isProfessional;
+    public bool IsProfessional
     {
-        get { return isProffesional; }
+        get { return isProfessional; }
         set
         {
-            isProffesional = value;
+            isProfessional = value;
             OnPropertyChanged();
-            ((Command)ProffesionalSelectedCommand).ChangeCanExecute();
+            ((Command)ProfessionalSelectedCommand).ChangeCanExecute();
             ((Command)VisitorSelectedCommand).ChangeCanExecute();
         }
     }
@@ -101,24 +101,24 @@ public class SignUpViewModel : ViewModelBase
     public SignUpViewModel()
     {
 
-        ProffesionalSelectedCommand = new Command(ProffesionalSelected, () => !IsProffesional);
-        VisitorSelectedCommand = new Command(VisitorSelected, () => IsProffesional);
-        IsProffesional = false;
+        ProfessionalSelectedCommand = new Command(ProfessionalSelected, () => !IsProfessional);
+        VisitorSelectedCommand = new Command(VisitorSelected, () => IsProfessional);
+        IsProfessional = false;
 
     }
 
 
 
 
-    private async void ProffesionalSelected()
+    private async void ProfessionalSelected()
     {
-        IsProffesional = true;
+        IsProfessional = true;
 
     }
 
     private async void VisitorSelected()
     {
-        IsProffesional = false;
+        IsProfessional = false;
     }
 
 
