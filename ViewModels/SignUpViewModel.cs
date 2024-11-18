@@ -1,9 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using SkiApp.ViewModels;
 using System.Windows.Input;
+using SkiApp.Services;
+using SkiApp.Models;
 namespace SkiApp.ViewModels;
 
 public class SignUpViewModel : ViewModelBase
 {
+    private SkiServiceWebAPIProxy proxy;
+    //public RegisterViewModel(SkiWebAPIProxy proxy)
+    //{
+    //    this.proxy = proxy;
+    //    RegisterCommand = new Command(OnRegister);
+    //    CancelCommand = new Command(OnCancel);
+    //    ShowPasswordCommand = new Command(OnShowPassword);
+    //    UploadPhotoCommand = new Command(OnUploadPhoto);
+    //    PhotoURL = proxy.GetDefaultProfilePhotoUrl();
+    //    LocalPhotoPath = "";
+    //    IsPassword = true;
+    //    NameError = "Name is required";
+    //    LastNameError = "Last name is required";
+    //    EmailError = "Email is required";
+    //    PasswordError = "Password must be at least 4 characters long and contain letters and numbers";
+    //}
+
     private string username;
     public string Username
     {

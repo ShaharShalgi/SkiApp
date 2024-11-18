@@ -17,7 +17,7 @@
 
       <Grid ColumnDefinitions="1*" RowDefinitions="1*,1*,1*,1*">
 
-        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0">
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0" Spacing="20">
           <!--Professional selection-->
           <VerticalStackLayout Spacing="5">
 
