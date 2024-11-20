@@ -84,76 +84,13 @@ namespace SkiApp.Services
 
         //This methos call the AddTask web API on the server and return the UserTask object with the given ID
         //or null if the call fails
-        public async Task<VisitorInfo?> AddTask(VisitorInfo task)
-        {
-            //Set URI to the specific function API
-            string url = $"{this.baseUrl}addtask";
-            try
-            {
-                //Call the server API
-                string json = JsonSerializer.Serialize(task);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(url, content);
-                //Check status
-                if (response.IsSuccessStatusCode)
-                {
-                    //Extract the content as string
-                    string resContent = await response.Content.ReadAsStringAsync();
-                    //Desrialize result
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
-                    return result;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+        
         }
 
         //This method call the UpdateTask web API on the server and return the UserTask object with
         //all of the  given IDs of all new comment objects that were added
         //or null if the call fails
-        public async Task<VisitorInfo?> UpdateTask(VisitorInfo task)
-        {
-            //Set URI to the specific function API
-            string url = $"{this.baseUrl}updatetask";
-            try
-            {
-                //Call the server API
-                string json = JsonSerializer.Serialize(task);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(url, content);
-                //Check status
-                if (response.IsSuccessStatusCode)
-                {
-                    //Extract the content as string
-                    string resContent = await response.Content.ReadAsStringAsync();
-                    //Desrialize result
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
-                    return result;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
+       
 
         //This method call the UpdateUser web API on the server and return true if the call was successful
         //or false if the call fails
