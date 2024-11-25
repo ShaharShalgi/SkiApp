@@ -123,24 +123,6 @@ namespace SkiApp.Services
        
 
         //This method call the check Web API and return a string with the server status
-        public async Task<string> Check()
-        {
-            //Set URI to the specific function API
-            string url = $"{this.baseUrl}check";
-            try
-            {
-                //Call the server API
-                HttpResponseMessage response = await client.GetAsync(url);
-                //Extract the content as string
-                string resContent = await response.Content.ReadAsStringAsync();
-
-                //Check status
-                return $"{response.StatusCode} - {resContent}";
-            }
-            catch (Exception ex)
-            {
-                return $"Call Failed - Error: {ex.Message}";
-            }
-        }
+       
     }
 }

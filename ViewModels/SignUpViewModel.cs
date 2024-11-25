@@ -7,108 +7,145 @@ using SkiApp.ViewModels;
 using System.Windows.Input;
 using SkiApp.Services;
 using SkiApp.Models;
+using static System.Net.Mime.MediaTypeNames;
+using CoreBluetooth;
+using CoreData;
 namespace SkiApp.ViewModels;
 
 public class SignUpViewModel : ViewModelBase
 {
     private SkiServiceWebAPIProxy proxy;
-    //public RegisterViewModel(SkiWebAPIProxy proxy)
-    //{
-    //    this.proxy = proxy;
-    //    RegisterCommand = new Command(OnRegister);
-    //    CancelCommand = new Command(OnCancel);
-    //    ShowPasswordCommand = new Command(OnShowPassword);
-    //    UploadPhotoCommand = new Command(OnUploadPhoto);
-    //    PhotoURL = proxy.GetDefaultProfilePhotoUrl();
-    //    LocalPhotoPath = "";
-    //    IsPassword = true;
-    //    NameError = "Name is required";
-    //    LastNameError = "Last name is required";
-    //    EmailError = "Email is required";
-    //    PasswordError = "Password must be at least 4 characters long and contain letters and numbers";
-    //}
-
-    private string username;
-    public string Username
+    public RegisterViewModel(SkiWebAPIProxy proxy)
     {
-        get { return username; }
-        set { username = value; OnPropertyChanged(); }
+        this.proxy = proxy;
+        RegisterCommand = new Command(OnRegister);
+        CancelCommand = new Command(OnCancel);
+        //ShowPasswordCommand = new Command(OnShowPassword);
+        //UploadPhotoCommand = new Command(OnUploadPhoto);
+        //PhotoURL = proxy.GetDefaultProfilePhotoUrl();
+        //LocalPhotoPath = "";
+        //IsPassword = true;
+        NameError = "Name is required";
+        IsProfessional = false;
+        EmailError = "Email is required";
+        PasswordError = "Password must be at least 4 characters long and contain letters and numbers";
     }
 
+    private bool showNameError;
 
-    private string? passError;
-    public string PassError
+    public bool ShowNameError
     {
-        get { return passError; }
+        get => showNameError;
         set
         {
-            passError = value; OnPropertyChanged();
+            showNameError = value;
+            OnPropertyChanged("ShowNameError");
         }
     }
 
-    private string password;
-    public string? Password
-    {
-        get { return password; }
+    private string username;
 
+    public string Username
+    {
+        get => username;
         set
         {
-            password = value;
-            PassError = "";
-            OnPropertyChanged(nameof(Password));
-            OnPropertyChanged(nameof(PassError));
-            if (string.IsNullOrEmpty(password))
+            username = value;
+            ValidateName();
+            OnPropertyChanged("Username");
+        }
+    }
+
+    private string nameError;
+
+    public string NameError
+    {
+        get => nameError;
+        set
+        {
+            nameError = value;
+            OnPropertyChanged("NameError");
+        }
+    }
+
+    private void ValidateName()
+    {
+        this.ShowNameError = string.IsNullOrEmpty(Username);
+    }
+
+    private bool showEmailError;
+
+    public bool ShowEmailError
+    {
+        get => showEmailError;
+        set
+        {
+            showEmailError = value;
+            OnPropertyChanged("ShowEmailError");
+        }
+    }
+
+
+
+
+    private string email;
+
+    public string Email
+    {
+        get => email;
+        set
+        {
+            email = value;
+            ValidateEmail();
+            OnPropertyChanged("Email");
+        }
+    }
+
+    private string emailError;
+
+    public string EmailError
+    {
+        get => emailError;
+        set
+        {
+            emailError = value;
+            OnPropertyChanged("EmailError");
+        }
+    }
+
+    private void ValidateEmail()
+    {
+        this.ShowEmailError = string.IsNullOrEmpty(Email);
+        if (!ShowEmailError)
+        {
+            //check if email is in the correct format using regular expression
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
             {
-                PassError = "";
+                EmailError = "Email is not valid";
+                ShowEmailError = true;
             }
             else
             {
-                if (password != null)
-                {
-                    bool IsPasswordOkay = IsValidPassword(password);
-                    if (!IsPasswordOkay)
-                    {
-                        PassError = "סיסמה לא טובה ";
-                    }
-                }
-
+                EmailError = "";
+                ShowEmailError = false;
             }
         }
-    }
-
-
-    private bool IsValidPassword(string password)
-    {
-        bool hasUpperCase = false;
-        bool hasDigit = false;
-
-        foreach (char c in password)
+        else
         {
-            if (char.IsUpper(c))
-            {
-                hasUpperCase = true;
-            }
-            if (char.IsDigit(c))
-            {
-                hasDigit = true;
-            }
-
-            if (hasUpperCase && hasDigit)
-            {
-                break; // אם מצאנו כבר גם אות גדולה וגם ספרה, אפשר לעצור את הלולאה
-            }
+            EmailError = "Email is required";
         }
-        return hasUpperCase && hasDigit;
-
     }
+    private string gender;
 
-    //נחבר את זה לכפתורים
-    public ICommand ProfessionalSelectedCommand { get; set; }
-    public ICommand VisitorSelectedCommand { get; set; }
-
-
-
-    //נחבר את זה אם המנהל הוא האופציה הנבחרת
+    public string Gender
+    {
+        get => gender;
+        set
+        {
+            gender = value;
+            OnPropertyChanged("Gender");
+        }
+    }
     private bool isProfessional;
     public bool IsProfessional
     {
@@ -121,6 +158,151 @@ public class SignUpViewModel : ViewModelBase
             ((Command)VisitorSelectedCommand).ChangeCanExecute();
         }
     }
+
+
+    private bool showPasswordError;
+
+    public bool ShowPasswordError
+    {
+        get => showPasswordError;
+        set
+        {
+            showPasswordError = value;
+            OnPropertyChanged("ShowPasswordError");
+        }
+    }
+
+    private string password;
+
+    public string Password
+    {
+        get => password;
+        set
+        {
+            password = value;
+            ValidatePassword();
+            OnPropertyChanged("Password");
+        }
+    }
+
+    private string passwordError;
+
+    public string PasswordError
+    {
+        get => passwordError;
+        set
+        {
+            passwordError = value;
+            OnPropertyChanged("PasswordError");
+        }
+    }
+
+    private void ValidatePassword()
+    {
+        //Password must include characters and numbers and be longer than 4 characters
+        if (string.IsNullOrEmpty(password) ||
+            password.Length < 4 ||
+            !password.Any(char.IsDigit) ||
+            !password.Any(char.IsLetter))
+        {
+            this.ShowPasswordError = true;
+        }
+        else
+            this.ShowPasswordError = false;
+    }
+
+
+    
+    public Command RegisterCommand { get; }
+    public Command CancelCommand { get; }
+
+    private async void OnRegister()
+    {
+        ValidateName();
+        ValidateEmail();
+        ValidatePassword();
+        if (ShowPasswordError && ShowEmailError && ShowNameError)
+        {
+
+            //NEXT ETERATION - REGISTER FOR MANAGER 
+
+            //register for manager
+            //if (IsManager)
+            //{
+            //    //Create a new user that is a manager
+            //    var newUser = new UsersInfo
+            //    {
+            //        Name = this.Username,
+            //        Password = this.Password,
+            //        TypeID = 3
+            //    };
+
+            //    //Call the Register method on the proxy to register the new user
+            //    InServerCall = true;
+            //    newUser = await proxy.RegisterManager(newUser);
+            //    InServerCall = false;
+
+            //    //If the registration was successful, navigate to the login page
+            //    if (newUser != null)
+            //    {
+            //        InServerCall = false;
+
+            //        //ASK OFER
+
+            //        ((App)(Application.Current)).MainPage.Navigation.PopAsync();
+            //    }
+
+            //}
+
+
+            //if its not a manager
+
+
+            if (!IsProfessional)
+            {
+                var newUser = new VisitorInfo
+                {
+                    Username = this.Username,
+                    Pass = this.Password,
+                    TypeID = 1
+                };
+
+                //Call the Register method on the proxy to register the new user
+                InServerCall = true;
+                newUser = await proxy.RegisterRegular(newUser);
+                InServerCall = false;
+
+                //If the registration was successful, navigate to the login page
+                if (newUser != null)
+                {
+                    InServerCall = false;
+
+                    //ASK OFER NAVIGATE TO WHERE?
+
+                    ((App)(Application.Current)).MainPage.Navigation.PopAsync();
+                }
+            }
+
+        }
+        else
+        {
+
+            //If the registration failed, display an error message
+            string errorMsg = "Registration failed. Please try again.";
+            await Application.Current.MainPage.DisplayAlert("Registration", "failed", "ok");
+        }
+
+    }
+
+
+    //נחבר את זה לכפתורים
+    public ICommand ProfessionalSelectedCommand { get; set; }
+    public ICommand VisitorSelectedCommand { get; set; }
+
+
+
+    //נחבר את זה אם המנהל הוא האופציה הנבחרת
+  
 
     public SignUpViewModel()
     {
