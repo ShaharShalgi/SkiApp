@@ -7,24 +7,20 @@ using SkiApp.ViewModels;
 using System.Windows.Input;
 using SkiApp.Services;
 using SkiApp.Models;
-using static System.Net.Mime.MediaTypeNames;
-using CoreBluetooth;
-using CoreData;
 namespace SkiApp.ViewModels;
 
 public class SignUpViewModel : ViewModelBase
 {
     private SkiServiceWebAPIProxy proxy;
-    public RegisterViewModel(SkiWebAPIProxy proxy)
+    public SignUpViewModel(SkiServiceWebAPIProxy proxy)
     {
         this.proxy = proxy;
         RegisterCommand = new Command(OnRegister);
         CancelCommand = new Command(OnCancel);
         //ShowPasswordCommand = new Command(OnShowPassword);
-        //UploadPhotoCommand = new Command(OnUploadPhoto);
-        //PhotoURL = proxy.GetDefaultProfilePhotoUrl();
-        //LocalPhotoPath = "";
         //IsPassword = true;
+        ProfessionalSelectedCommand = new Command(ProfessionalSelected, () => !IsProfessional);
+        VisitorSelectedCommand = new Command(VisitorSelected, () => IsProfessional);
         NameError = "Name is required";
         IsProfessional = false;
         EmailError = "Email is required";
@@ -264,12 +260,13 @@ public class SignUpViewModel : ViewModelBase
                 {
                     Username = this.Username,
                     Pass = this.Password,
-                    TypeID = 1
+                   Email = this.Email,
+                   Gender = this.Gender,
                 };
 
                 //Call the Register method on the proxy to register the new user
                 InServerCall = true;
-                newUser = await proxy.RegisterRegular(newUser);
+                newUser = await proxy.SignUp(newUser);
                 InServerCall = false;
 
                 //If the registration was successful, navigate to the login page
@@ -292,6 +289,11 @@ public class SignUpViewModel : ViewModelBase
             await Application.Current.MainPage.DisplayAlert("Registration", "failed", "ok");
         }
 
+    }
+    public void OnCancel()
+    {
+        //Navigate back to the login page
+        ((App)(Application.Current)).MainPage.Navigation.PopAsync();
     }
 
 
