@@ -30,7 +30,7 @@ namespace SkiApp.Services
         private static string serverIP = "ds7c1nx3-7171.euw.devtunnels.ms";
         private HttpClient client;
         private string baseUrl;
-        public static string BaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
+        public static string BaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
         private static string ImageBaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SkiApp.Views;
 using SkiApp.ViewModels;
+using SkiApp.Services;
 
 namespace SkiApp
 {
@@ -16,10 +17,12 @@ namespace SkiApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddSingleton<LogInPage>();
-            builder.Services.AddSingleton<LogInViewModel>();
-            builder.Services.AddSingleton<SignUpViewModel>();
-            builder.Services.AddSingleton<SignUp>();
+            builder.Services.AddTransient<LogInPage>();
+            builder.Services.AddTransient<LogInViewModel>();
+            builder.Services.AddTransient<SignUpViewModel>();
+            builder.Services.AddTransient<SignUp>();
+            builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
+
 
 #if DEBUG
     		builder.Logging.AddDebug();

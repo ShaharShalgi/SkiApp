@@ -10,4 +10,6 @@ public partial class SignUp : ContentPage
 		this.BindingContext = vm;
 		InitializeComponent();
 	}
+
+    
 }

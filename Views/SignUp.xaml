@@ -6,7 +6,7 @@
              x:Class="SkiApp.Views.SignUp"
              Title="SignUp">
     <ScrollView>
-    <VerticalStackLayout>
+        <VerticalStackLayout IsEnabled="{Binding NotInServerCall}">
       <Label
            Text="Select user type"
            HorizontalOptions="Center"
@@ -82,20 +82,18 @@
  x:Name="PasswordEntry"
  Placeholder="Password"
               Text="{Binding Password}"
- IsPassword="True" />
+ IsPassword="True"/>
 
-          <Entry
- x:Name="ConfirmPasswordEntry"
- Placeholder="Confirm Password"
- IsPassword="True" />
+          
           <Entry
             x:Name="EmailEntry"
             Placeholder="Email"
-            
+            Text="{Binding Email}"
             />
           <Picker
   x:Name="GenderPicker"
   Title="Gender"
+              SelectedItem="{Binding Gender}"
                     >
             <Picker.Items
                         >
@@ -149,17 +147,22 @@ Placeholder="Text"
         </VerticalStackLayout>
 
         <!--submit button-->
-        <Button
+        <Button 
             Grid.Row="3"
             x:Name="RegisterButton"
             Text="Submit"
-               
+              Command="{Binding RegisterCommand}"
+            IsEnabled="{Binding NotInServerCall}"
             WidthRequest="200"
             HorizontalOptions="Center"
             Margin="0,20,0,0" />
 
       </Grid>
-
-    </VerticalStackLayout>
+            <Grid ColumnDefinitions="1*" RowDefinitions="1*, 1*, 1*, 1*">
+            <Label Grid.Row="1" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" />
+                <Label Grid.Row="2" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" />
+                <Label Grid.Row="4" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}"/>
+            </Grid>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

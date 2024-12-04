@@ -209,18 +209,18 @@ public class SignUpViewModel : ViewModelBase
 
 
     
-    public Command RegisterCommand { get; }
-    public Command CancelCommand { get; }
+    public ICommand RegisterCommand { get; }  
+    public ICommand CancelCommand { get; }
 
     private async void OnRegister()
     {
         ValidateName();
         ValidateEmail();
         ValidatePassword();
-        if (ShowPasswordError && ShowEmailError && ShowNameError)
+        if (!ShowPasswordError && !ShowEmailError && !ShowNameError)
         {
 
-            //NEXT ETERATION - REGISTER FOR MANAGER 
+            //NEXT ITERATION - REGISTER FOR MANAGER 
 
             //register for manager
             //if (IsManager)
@@ -306,14 +306,7 @@ public class SignUpViewModel : ViewModelBase
     //נחבר את זה אם המנהל הוא האופציה הנבחרת
   
 
-    public SignUpViewModel()
-    {
-
-        ProfessionalSelectedCommand = new Command(ProfessionalSelected, () => !IsProfessional);
-        VisitorSelectedCommand = new Command(VisitorSelected, () => IsProfessional);
-        IsProfessional = false;
-
-    }
+    
 
 
 
