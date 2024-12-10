@@ -44,7 +44,41 @@ namespace SkiApp.Services
             this.baseUrl = BaseAddress;
         }
 
-        
+        public async Task<VisitorInfo?> LoginAsync(VisitorInfo userInfo)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}Login";
+            try
+            {
+                //Call the server API
+                string json = JsonSerializer.Serialize(userInfo);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    //Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+                    //Desrialize result
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
 
         //This methos call the Register web API on the server and return the AppUser object with the given ID
         //or null if the call fails
