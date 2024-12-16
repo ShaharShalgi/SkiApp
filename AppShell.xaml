@@ -18,9 +18,10 @@
         Title="login"
         ContentTemplate="{DataTemplate Views:LogInPage}"
         Route="Login" />
-       
+
 
     </TabBar>
+    <MenuItem Text="Logout" Command="{Binding LogoutCommand}" />
 
 
 </Shell>

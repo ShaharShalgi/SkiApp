@@ -47,7 +47,7 @@ namespace SkiApp.Services
         public async Task<VisitorInfo?> LoginAsync(VisitorInfo userInfo)
         {
             //Set URI to the specific function API
-            string url = $"{this.baseUrl}Login";
+            string url = $"{this.baseUrl}login";
             try
             {
                 //Call the server API

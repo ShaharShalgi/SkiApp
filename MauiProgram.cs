@@ -21,6 +21,8 @@ namespace SkiApp
             builder.Services.AddTransient<LogInViewModel>();
             builder.Services.AddTransient<SignUpViewModel>();
             builder.Services.AddTransient<SignUp>();
+            builder.Services.AddTransient<AppShell>();
+            builder.Services.AddTransient<AppShellViewModel>();
             builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
 
 
