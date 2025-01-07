@@ -16,6 +16,8 @@ namespace SkiApp
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Freshman.ttf", "Freshman");
+                    fonts.AddFont("Polar Snow.ttf", "Snow");
                 });
             builder.Services.AddTransient<LogInPage>();
             builder.Services.AddTransient<LogInViewModel>();
@@ -23,6 +25,11 @@ namespace SkiApp
             builder.Services.AddTransient<SignUp>();
             builder.Services.AddTransient<AppShell>();
             builder.Services.AddTransient<AppShellViewModel>();
+            builder.Services.AddTransient<Tips>();
+            builder.Services.AddTransient<Resorts>();
+            builder.Services.AddTransient<Coaches>();
+            builder.Services.AddTransient<Profile>();
+            builder.Services.AddTransient<Homepage>();
             builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
 
 

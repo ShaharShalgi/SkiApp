@@ -11,13 +11,25 @@
     <TabBar>
 
         <ShellContent
-        Title="sign up"
-        ContentTemplate="{DataTemplate Views:SignUp}"
-        Route="SignUp" />
+        Title="Home"
+        ContentTemplate="{DataTemplate Views:Homepage}"
+        Route="Homepage" />
         <ShellContent
-        Title="login"
-        ContentTemplate="{DataTemplate Views:LogInPage}"
-        Route="Login" />
+        Title="Tips"
+        ContentTemplate="{DataTemplate Views:Tips}"
+        Route="Tips" />
+        <ShellContent
+    Title="Resorts"
+    ContentTemplate="{DataTemplate Views:Resorts}"
+    Route="Resorts" />
+        <ShellContent
+Title="Coaches"
+ContentTemplate="{DataTemplate Views:Coaches}"
+Route="Coaches" />
+        <ShellContent
+Title="Profile"
+ContentTemplate="{DataTemplate Views:Profile}"
+Route="Profile" />
 
 
     </TabBar>

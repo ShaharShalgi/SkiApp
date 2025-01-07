@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using SkiApp.Models;
 using SkiApp.Views;
 
@@ -16,18 +17,20 @@ namespace SkiApp.ViewModels
         {
             this.serviceProvider = serviceProvider;
             this.currentUser = ((App)Application.Current).LoggedInUser;
+            LogoutCommand = new Command(OnLogout);
         }
+        public ICommand LogoutCommand { get; }
 
-       
+
 
         //this command will be used for logout menu item
-        public Command LogoutCommand
-        {
-            get
-            {
-                return new Command(OnLogout);
-            }
-        }
+        //public Command LogoutCommand
+        //{
+        //    get
+        //    {
+        //        return new Command(OnLogout);
+        //    }
+        //}
         //this method will be trigger upon Logout button click
         public void OnLogout()
         {
