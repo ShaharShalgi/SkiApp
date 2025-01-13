@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SkiApp.Views.Homepage"
-             Title="Homepage">
+<ContentPage
+    x:Class="SkiApp.Views.Homepage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Homepage">
     <VerticalStackLayout>
-        <Label 
-            Text="Ski Guide"
-            FontSize="70"
+        <Label
             FontFamily="Snow"
-            TextColor="RoyalBlue"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Image 
-            Source="snowflake.png"
-            WidthRequest="700"                   />
+            FontSize="70"
+            HorizontalOptions="Center"
+            Text="Ski Guide"
+            TextColor="#57baf7"
+            VerticalOptions="Center" />
+        <Image Source="snowflake.png" WidthRequest="700" />
+        <Grid RowDefinitions="*,*" RowSpacing="25">
+            <Button
+                Grid.Row="0"
+                BackgroundColor="#57baf7"
+                BorderColor="Black"
+                BorderWidth="3"
+                Command="{Binding OnLoginCommand}"
+                FontFamily="SuperOceanPersonalUse"
+                Text="Log In"
+                WidthRequest="150" />
 
-        <Button
-          FontFamily="SuperOceanPersonalUse"
-          Text="Log In"
-       Command="{Binding OnLoginCommand}"               />
+            <Button
+                Grid.Row="1"
+                BackgroundColor="#57baf7"
+                BorderColor="Black"
+                BorderWidth="3"
+                Command="{Binding OnRegisterCommand}"
+                FontFamily="SuperOceanPersonalUse"
+                HeightRequest="50"
+                Text="Sign Up"
+                WidthRequest="150" />
+        </Grid>
+
 
     </VerticalStackLayout>
 </ContentPage>

@@ -101,12 +101,12 @@ public class LogInViewModel : ViewModelBase
     }
 
    
-    } private void OnRegister()
+     private void OnRegister()
     {
         ErrorMsg = "";
         Username = "";
         Password = "";
         // Navigate to the Register View page
         ((App)Application.Current).MainPage.Navigation.PushAsync(serviceProvider.GetService<SignUp>());
-
+    }
 }

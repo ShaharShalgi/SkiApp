@@ -1,58 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ViewModels ="clr-namespace:SkiApp.ViewModels"        
-             x:DataType="ViewModels:LogInViewModel"
-             x:Class="SkiApp.Views.LogInPage"
-             Title="LogInPage">
-    <VerticalStackLayout>
-        <Grid RowDefinitions="1*,1*,1*,1*" RowSpacing="30">
-            <Entry
-         Grid.Row="0"
-         FontFamily="SuperOceanPersonalUse"
-         Placeholder="Username"
-         Text="{Binding Username}"
-         IsEnabled="{Binding NotInServerCall}"
-          />
+<ContentPage
+    x:Class="SkiApp.Views.LogInPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+    Title="LogInPage"
+    x:DataType="ViewModels:LogInViewModel">
 
-            <Entry
-         Grid.Row="1"
-         FontFamily="SuperOceanPersonalUse"
-         IsPassword="True"
-         Placeholder="Password"
-         Text="{Binding Password}"
-         IsEnabled="{Binding NotInServerCall}"
-          />
+    <VerticalStackLayout Padding="30" VerticalOptions="Start">
+        <Frame
+            Padding="20"
+            BackgroundColor="White"
+            CornerRadius="10"
+            HasShadow="True">
+            <Grid RowDefinitions="1*,1*,1*,1*" RowSpacing="30">
+                <Entry
+                    Grid.Row="0"
+                    BackgroundColor="#EFEFEF"
+                    FontFamily="SuperOceanPersonalUse"
+                    IsEnabled="{Binding NotInServerCall}"
+                    Placeholder="Username"
+                    PlaceholderColor="#A0A0A0"
+                    Text="{Binding Username}" />
 
-            <Grid
-         Grid.Row="3"
-         ColumnDefinitions=" 1*"
-         RowDefinitions="1*, 1*"
-         RowSpacing="20">
+                <Entry
+                    Grid.Row="1"
+                    BackgroundColor="#EFEFEF"
+                    FontFamily="SuperOceanPersonalUse"
+                    IsEnabled="{Binding NotInServerCall}"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    PlaceholderColor="#A0A0A0"
+                    Text="{Binding Password}" />
+
+
                 <Button
-             Grid.Row="0"
-             Grid.Column="0"
-             Margin="5"
-                    
-            
-             FontFamily="SuperOceanPersonalUse"
-             Text="Login"
-                   Command="{Binding LoginCommand}"
-                    IsEnabled="{Binding NotInServerCall}"/>
-
-              
+                    Grid.Row="2"
+                    Margin="5"
+                    Command="{Binding LoginCommand}"
+                    FontFamily="SuperOceanPersonalUse"
+                    IsEnabled="{Binding NotInServerCall}"
+                    Text="Login"
+                    WidthRequest="150" />
+                <Label
+                    Grid.Row="3"
+                    HorizontalOptions="Center"
+                    IsEnabled="{Binding NotInServerCall}"
+                    Text="Don't have an account? Register"
+                    TextColor="Blue"
+                    VerticalOptions="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
-        </Grid>
-        <Label 
- Text="Don't have an account? Register"
- TextColor="Blue"
- HorizontalOptions="Center"
- VerticalOptions="End" IsEnabled="{Binding NotInServerCall}">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding RegisterCommand}"/>
-            </Label.GestureRecognizers>
-        </Label>
-        <ActivityIndicator IsRunning="{Binding InServerCall}" Color="Red"></ActivityIndicator>
-        <Label Text="{Binding ErrorMsg}" TextColor="Red" HorizontalOptions="Center"></Label>
+
+
+
+        </Frame>
+
+        <ActivityIndicator IsRunning="{Binding InServerCall}" Color="Red" />
+        <Label
+            HorizontalOptions="Center"
+            Text="{Binding ErrorMsg}"
+            TextColor="Red" />
+        <Image Source="Snowman2.png" WidthRequest="270" />
     </VerticalStackLayout>
 </ContentPage>

@@ -11,7 +11,7 @@ namespace SkiApp
         {
 
             InitializeComponent();
-            LogInPage? v = serviceProvider.GetService<LogInPage>();
+            Homepage? v = serviceProvider.GetService<Homepage>();
             //SignUpView? v = serviceProvider.GetService<SignUpView>();
 
             MainPage = new NavigationPage(v);

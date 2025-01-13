@@ -3,37 +3,34 @@
     x:Class="SkiApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SkiApp"
     xmlns:Views="clr-namespace:SkiApp.Views"
-    Shell.FlyoutBehavior="Disabled"
-    Title="SkiApp">
+    xmlns:local="clr-namespace:SkiApp"
+    Title="SkiApp"
+    Shell.FlyoutBehavior="Flyout">
 
-    <TabBar>
-
-        <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate Views:Homepage}"
-        Route="Homepage" />
-        <ShellContent
-        Title="Tips"
-        ContentTemplate="{DataTemplate Views:Tips}"
-        Route="Tips" />
-        <ShellContent
-    Title="Resorts"
-    ContentTemplate="{DataTemplate Views:Resorts}"
-    Route="Resorts" />
-        <ShellContent
-Title="Coaches"
-ContentTemplate="{DataTemplate Views:Coaches}"
-Route="Coaches" />
-        <ShellContent
-Title="Profile"
-ContentTemplate="{DataTemplate Views:Profile}"
-Route="Profile" />
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="tabs">
 
 
-    </TabBar>
-    <MenuItem Text="Logout" Command="{Binding LogoutCommand}" />
+        <ShellContent
+            Title="Tips"
+            ContentTemplate="{DataTemplate Views:Tips}"
+            Route="Tips" />
+        <ShellContent
+            Title="Resorts"
+            ContentTemplate="{DataTemplate Views:Resorts}"
+            Route="Resorts" />
+        <ShellContent
+            Title="Coaches"
+            ContentTemplate="{DataTemplate Views:Coaches}"
+            Route="Coaches" />
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate Views:Profile}"
+            Route="Profile" />
+
+
+    </FlyoutItem>
+    <MenuItem Command="{Binding LogoutCommand}" Text="Logout" />
 
 
 </Shell>

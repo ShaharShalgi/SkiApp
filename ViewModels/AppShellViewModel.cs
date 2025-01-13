@@ -36,7 +36,7 @@ namespace SkiApp.ViewModels
         {
             ((App)Application.Current).LoggedInUser = null;
 
-            ((App)Application.Current).MainPage = new NavigationPage(serviceProvider.GetService<LogInPage>());
+            ((App)Application.Current).MainPage = new NavigationPage(serviceProvider.GetService<Homepage>());
         }
     }
 }
