@@ -1,167 +1,162 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:SkiApp.ViewModels"
-             x:DataType="viewModels:SignUpViewModel"
-             x:Class="SkiApp.Views.SignUp"
-             Title="SignUp">
+<ContentPage
+    x:Class="SkiApp.Views.SignUp"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:SkiApp.ViewModels"
+    Title="SignUp"
+    x:DataType="viewModels:SignUpViewModel">
     <ScrollView>
         <VerticalStackLayout IsEnabled="{Binding NotInServerCall}">
-      <Label
-           Text="Select user type"
-           HorizontalOptions="Center"
-           FontSize="20"
-           Margin="0,0,0,20"
-            />
-
-
-      <Grid ColumnDefinitions="1*" RowDefinitions="1*,1*,1*,1*">
-
-        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0" Spacing="20">
-          <!--Professional selection-->
-          <VerticalStackLayout Spacing="5">
-
-            <Button
-                x:Name="ProfessionalDot"
-                HeightRequest="24"
-                WidthRequest="24"
-                CornerRadius="12"
-                Padding="0"
-                BorderColor="Gray"
-                BackgroundColor="Purple"
-                Command="{Binding ProfessionalSelectedCommand}"
-                      
-                        >
-
-            </Button>
             <Label
-                Text="Professional"
-                FontSize="14"
-                HorizontalOptions="Center" />
-          </VerticalStackLayout>
+                Margin="0,0,0,20"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Select user type" />
+
+
+            <Grid ColumnDefinitions="1*" RowDefinitions="1*,1*,1*,1*">
+
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    Spacing="20">
+                    <!--  Professional selection  -->
+                    <VerticalStackLayout Spacing="5">
+
+                        <Button
+                            x:Name="ProfessionalDot"
+                            Padding="0"
+                            BackgroundColor="Purple"
+                            BorderColor="Gray"
+                            Command="{Binding ProfessionalSelectedCommand}"
+                            CornerRadius="12"
+                            HeightRequest="24"
+                            WidthRequest="24" />
+                        <Label
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="Professional" />
+                    </VerticalStackLayout>
 
 
 
-          <!--Visitor Selection-->
+                    <!--  Visitor Selection  -->
 
-          <VerticalStackLayout Spacing="5">
-            <Button
-     x:Name="VisitorDot"
-     HeightRequest="24"
-     WidthRequest="24"
-     CornerRadius="12"
-     Padding="0"
-     BorderColor="Gray"
-     BackgroundColor="Purple"
-     Command="{Binding VisitorSelectedCommand}"
-           
-                         
-                        >
-
-            </Button>
-            <Label
-     Text="Visitor"
-     FontSize="14"
-     HorizontalOptions="Center" />
-          </VerticalStackLayout>
-
-
-
-
-        </HorizontalStackLayout>
-
-        <!--common fields for both-->
-        <VerticalStackLayout Spacing="15" Margin="0,20,0,0" Grid.Row="1">
-          <Entry
- x:Name="UsernameEntry"
- Placeholder="Username"
-              Text="{Binding Username}"
- Margin="0,20,0,0" />
-
-          <Entry
- x:Name="PasswordEntry"
- Placeholder="Password"
-              Text="{Binding Password}"
- IsPassword="True"/>
-
-          
-          <Entry
-            x:Name="EmailEntry"
-            Placeholder="Email"
-            Text="{Binding Email}"
-            />
-          <Picker
-  x:Name="GenderPicker"
-  Title="Gender"
-              SelectedItem="{Binding Gender}"
-                    >
-            <Picker.Items
-                        >
-              <x:String>Male</x:String>
-              <x:String>Female</x:String>
-              <x:String>Other</x:String>
-             
-            </Picker.Items>
-          </Picker>
-        </VerticalStackLayout>
-
-        <!--only Professional fields-->
-        <!--IsVisible="{Binding IsProfessionalVisible}" - add this to see if manager is chosen-->
-        <VerticalStackLayout
-   Grid.Row="2"
-   x:Name="ProfessionalFields"
-  IsVisible="{Binding IsProfessional}"
-   Spacing="15">
-          <Entry
- x:Name="LocEntry"
- Placeholder="Loc"
-                   
-                    
-                    />
-
-          <Entry
- x:Name="PriceEntry"
- Placeholder="Price"
-                    
-                    />
-          <Entry
-x:Name="TextEntry"
-Placeholder="Text"
-                    
-                    />
+                    <VerticalStackLayout Spacing="5">
+                        <Button
+                            x:Name="VisitorDot"
+                            Padding="0"
+                            BackgroundColor="Purple"
+                            BorderColor="Gray"
+                            Command="{Binding VisitorSelectedCommand}"
+                            CornerRadius="12"
+                            HeightRequest="24"
+                            WidthRequest="24" />
+                        <Label
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="Visitor" />
+                    </VerticalStackLayout>
 
 
 
 
-          <Picker
- x:Name="TypePicker"
- Title="Type of Profession"
-                    >
-            <Picker.Items
-                        >
-              <x:String>Coach</x:String>
-              <x:String>Manager</x:String>
-              
-            </Picker.Items>
-          </Picker>
-        </VerticalStackLayout>
+                </HorizontalStackLayout>
 
-        <!--submit button-->
-        <Button 
-            Grid.Row="3"
-            x:Name="RegisterButton"
-            Text="Submit"
-              Command="{Binding RegisterCommand}"
-            IsEnabled="{Binding NotInServerCall}"
-            WidthRequest="200"
-            HorizontalOptions="Center"
-            Margin="0,20,0,0" />
+                <!--  common fields for both  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Margin="0,20,0,0"
+                    Spacing="15">
+                    <Entry
+                        x:Name="UsernameEntry"
+                        Margin="0,20,0,0"
+                        Placeholder="Username"
+                        Text="{Binding Username}" />
 
-      </Grid>
+                    <Entry
+                        x:Name="PasswordEntry"
+                        IsPassword="True"
+                        Placeholder="Password"
+                        Text="{Binding Password}" />
+
+
+                    <Entry
+                        x:Name="EmailEntry"
+                        Placeholder="Email"
+                        Text="{Binding Email}" />
+                    <Picker
+                        x:Name="GenderPicker"
+                        Title="Gender"
+                        SelectedItem="{Binding Gender}">
+                        <Picker.Items>
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
+                            <x:String>Other</x:String>
+
+                        </Picker.Items>
+                    </Picker>
+                </VerticalStackLayout>
+
+                <!--  only Professional fields  -->
+                <!--  IsVisible="{Binding IsProfessionalVisible}" - add this to see if manager is chosen  -->
+                <VerticalStackLayout
+                    x:Name="ProfessionalFields"
+                    Grid.Row="2"
+                    IsVisible="{Binding IsProfessional}"
+                    Spacing="15">
+                    <Entry x:Name="LocEntry" Placeholder="Loc" />
+
+                    <Entry x:Name="PriceEntry" Placeholder="Price" />
+                    <Entry x:Name="TextEntry" Placeholder="Text" />
+
+
+
+
+                    <Picker x:Name="TypePicker" Title="Type of Profession">
+                        <Picker.Items>
+                            <x:String>Coach</x:String>
+                            <x:String>Manager</x:String>
+
+                        </Picker.Items>
+                    </Picker>
+                </VerticalStackLayout>
+
+                <!--  submit button  -->
+                <Button
+                    x:Name="RegisterButton"
+                    Grid.Row="3"
+                    Margin="0,20,0,0"
+                    Command="{Binding RegisterCommand}"
+                    HorizontalOptions="Center"
+                    IsEnabled="{Binding NotInServerCall}"
+                    Text="Submit"
+                    WidthRequest="200" />
+
+            </Grid>
             <Grid ColumnDefinitions="1*" RowDefinitions="1*, 1*, 1*, 1*">
-            <Label Grid.Row="1" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" />
-                <Label Grid.Row="2" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" />
-                <Label Grid.Row="4" TextColor="MediumVioletRed" FontSize="20" HorizontalTextAlignment="Center" Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}"/>
+                <Label
+                    Grid.Row="1"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding ShowNameError}"
+                    Text="{Binding NameError}"
+                    TextColor="MediumVioletRed" />
+                <Label
+                    Grid.Row="2"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding ShowPasswordError}"
+                    Text="{Binding PasswordError}"
+                    TextColor="MediumVioletRed" />
+                <Label
+                    Grid.Row="4"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding ShowEmailError}"
+                    Text="{Binding EmailError}"
+                    TextColor="MediumVioletRed" />
             </Grid>
         </VerticalStackLayout>
     </ScrollView>

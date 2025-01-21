@@ -115,11 +115,43 @@ namespace SkiApp.Services
                 return null;
             }
         }
-
+        public async Task<ProfessionalInfo?> SignUpPro(ProfessionalInfo pro)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}registerPro";
+            try
+            {
+                //Call the server API
+                string json = JsonSerializer.Serialize(pro);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    //Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+                    //Desrialize result
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    ProfessionalInfo? result = JsonSerializer.Deserialize<ProfessionalInfo>(resContent, options);
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         //This methos call the AddTask web API on the server and return the UserTask object with the given ID
         //or null if the call fails
-        
-        }
+
+    }
 
         //This method call the UpdateTask web API on the server and return the UserTask object with
         //all of the  given IDs of all new comment objects that were added

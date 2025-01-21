@@ -220,38 +220,47 @@ public class SignUpViewModel : ViewModelBase
         if (!ShowPasswordError && !ShowEmailError && !ShowNameError)
         {
 
-            //NEXT ITERATION - REGISTER FOR MANAGER 
+            if (IsProfessional)
+            {
 
-            //register for manager
-            //if (IsManager)
-            //{
-            //    //Create a new user that is a manager
-            //    var newUser = new UsersInfo
-            //    {
-            //        Name = this.Username,
-            //        Password = this.Password,
-            //        TypeID = 3
-            //    };
+                //Create a new user that is a manager
+                var newUser = new VisitorInfo
+                {
+                    Username = this.Username,
+                    Pass = this.Password,
+                    Email = this.Email,
+                    Gender = this.Gender,
+                    UserID = 0
+                };
+                //Create the restaurant
+                var newPro = new ProfessionalInfo
+                {
+                    Loc = this.Loc,
+                    TypeId = this.TypeID,
+                    Price = this.Price,
+                    UserId = (int)newUser.UserID,
+                    Txt = this.Text,
+                    Rating = this.Rating
+                };
+            
 
-            //    //Call the Register method on the proxy to register the new user
-            //    InServerCall = true;
-            //    newUser = await proxy.RegisterManager(newUser);
-            //    InServerCall = false;
+                //Call the Register method on the proxy to register the new user
+                InServerCall = true;
+                newUser = await proxy.SignUp(newUser);
+                newPro = await proxy.SignUpPro(newPro);
+                InServerCall = false;
 
-            //    //If the registration was successful, navigate to the login page
-            //    if (newUser != null)
-            //    {
-            //        InServerCall = false;
+                //If the registration was successful, navigate to the login page
+                if (newUser != null)
+                {
+                    InServerCall = false;
 
-            //        //ASK OFER
+                    //ASK OFER
 
-            //        ((App)(Application.Current)).MainPage.Navigation.PopAsync();
-            //    }
+                    ((App)(Application.Current)).MainPage.Navigation.PopAsync();
+                }
 
-            //}
-
-
-            //if its not a manager
+            }
 
 
             if (!IsProfessional)
@@ -262,6 +271,7 @@ public class SignUpViewModel : ViewModelBase
                     Pass = this.Password,
                    Email = this.Email,
                    Gender = this.Gender,
+                    UserID = 0
                 };
 
                 //Call the Register method on the proxy to register the new user
