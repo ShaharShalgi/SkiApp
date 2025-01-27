@@ -3,10 +3,100 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiApp.Views.Tips"
              Title="Tips">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- Header Section -->
+            <Frame BackgroundColor="#f0f9ff" BorderColor="#93c5fd" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Learn to Ski"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#1e40af"/>
+
+                    <Label Text="Master the slopes with our comprehensive lessons"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           TextColor="#64748b"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Difficulty Picker -->
+            <Frame BackgroundColor="White" BorderColor="#e2e8f0" CornerRadius="8" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Select Difficulty Level"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#334155"/>
+
+                    <Picker x:Name="DifficultyPicker"
+                            Title="Choose your skill level"
+                            BackgroundColor="#f8fafc">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Beginner - First Time on Slopes</x:String>
+                                <x:String>Intermediate - Comfortable on Blue Runs</x:String>
+                                <x:String>Advanced - Black Diamond Ready</x:String>
+                                <x:String>Expert - Double Black Diamond</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Video Sections -->
+            <Frame BackgroundColor="White" BorderColor="#e2e8f0" CornerRadius="8" Padding="15">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Today's Lesson Videos"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#334155"/>
+
+                    <!-- Video Placeholder 1 -->
+                    <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
+                        <Grid RowDefinitions="auto,*">
+                            <Label Text="Basic Techniques"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   Margin="0,0,0,10"/>
+                            <Image Grid.Row="1"
+                                   Source="video_placeholder.png"
+                                   Aspect="AspectFill"/>
+                            <!-- WebView would go here in actual implementation -->
+                        </Grid>
+                    </Frame>
+
+                    <!-- Video Placeholder 2 -->
+                    <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
+                        <Grid RowDefinitions="auto,*">
+                            <Label Text="Advanced Tips"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   Margin="0,0,0,10"/>
+                            <Image Grid.Row="1"
+                                   Source="video_placeholder.png"
+                                   Aspect="AspectFill"/>
+                            <!-- WebView would go here in actual implementation -->
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Additional Resources Section -->
+            <Frame BackgroundColor="#fff7ed" BorderColor="#fed7aa" CornerRadius="8" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Additional Resources"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#9a3412"/>
+
+                    <Label Text="Check back regularly for new videos and tips!"
+                           FontSize="14"
+                           TextColor="#7c2d12"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

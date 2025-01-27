@@ -192,7 +192,26 @@ public class SignUpViewModel : ViewModelBase
             OnPropertyChanged("PasswordError");
         }
     }
-
+    private string loc;
+    public string Loc
+    {
+        get => loc;
+        set
+        {
+            loc = value;
+            OnPropertyChanged("Loc");
+        }
+    }
+    private int typeId;
+    public int TypeId
+    {
+        get => typeId;
+        set
+        {
+            typeId = value;
+            OnPropertyChanged("TypeId");
+        }
+    }
     private void ValidatePassword()
     {
         //Password must include characters and numbers and be longer than 4 characters
@@ -206,9 +225,29 @@ public class SignUpViewModel : ViewModelBase
         else
             this.ShowPasswordError = false;
     }
+    private double price;
+    public double Price
+    {
+        get => price;
+        set
+        {
+            price = value;
+            OnPropertyChanged("Price");
+        }
+    }
+    private string txt;
+    public string Txt
+    {
+        get => txt;
+        set
+        {
+            txt = value;
+            OnPropertyChanged("Txt");
+        }
+    }
+  
 
 
-    
     public ICommand RegisterCommand { get; }  
     public ICommand CancelCommand { get; }
 
@@ -232,21 +271,22 @@ public class SignUpViewModel : ViewModelBase
                     Gender = this.Gender,
                     UserID = 0
                 };
-                //Create the restaurant
+                newUser = await proxy.SignUp(newUser);
+
                 var newPro = new ProfessionalInfo
                 {
                     Loc = this.Loc,
-                    TypeId = this.TypeID,
+                    TypeId = this.TypeId + 1,
                     Price = this.Price,
-                    UserId = (int)newUser.UserID,
-                    Txt = this.Text,
-                    Rating = this.Rating
+                    UserId = newUser.UserID,
+                    Txt = this.Txt,
+                    Rating = 0
                 };
             
 
                 //Call the Register method on the proxy to register the new user
                 InServerCall = true;
-                newUser = await proxy.SignUp(newUser);
+                
                 newPro = await proxy.SignUpPro(newPro);
                 InServerCall = false;
 

@@ -106,15 +106,15 @@
                     Grid.Row="2"
                     IsVisible="{Binding IsProfessional}"
                     Spacing="15">
-                    <Entry x:Name="LocEntry" Placeholder="Loc" />
+                    <Entry x:Name="LocEntry" Placeholder="Loc" Text="{Binding Loc}" />
 
-                    <Entry x:Name="PriceEntry" Placeholder="Price" />
-                    <Entry x:Name="TextEntry" Placeholder="Text" />
-
-
+                    <Entry x:Name="PriceEntry" Placeholder="Price Per Night/Hour" Text="{Binding Price}" />
+                    <Entry x:Name="TextEntry" Placeholder="Text" Text="{Binding Txt}" />
 
 
-                    <Picker x:Name="TypePicker" Title="Type of Profession">
+
+
+                    <Picker x:Name="TypePicker" Title="Type of Profession" SelectedIndex="{Binding TypeId}">
                         <Picker.Items>
                             <x:String>Coach</x:String>
                             <x:String>Manager</x:String>
