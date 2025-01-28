@@ -26,6 +26,7 @@ namespace SkiApp
             builder.Services.AddTransient<AppShell>();
             builder.Services.AddTransient<AppShellViewModel>();
             builder.Services.AddTransient<Tips>();
+            builder.Services.AddTransient<TipsViewModel>();
             builder.Services.AddTransient<Resorts>();
             builder.Services.AddTransient<Coaches>();
             builder.Services.AddTransient<Profile>();

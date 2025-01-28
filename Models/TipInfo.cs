@@ -11,7 +11,7 @@ namespace SkiApp.Models
         public int TipId { get; set; }
 
 
-        public string? Difficulty { get; set; }
+        public int Difficulty { get; set; }
 
 
         public string? Topic { get; set; }

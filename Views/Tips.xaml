@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SkiApp.Models"
+              xmlns:viewModels="clr-namespace:SkiApp.ViewModels"
              x:Class="SkiApp.Views.Tips"
-             Title="Tips">
+             Title="Tips"
+             x:DataType="viewModels:TipsViewModel">
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
 
@@ -54,7 +57,7 @@
                            TextColor="#334155"/>
 
                     <!-- Video Placeholder 1 -->
-                    <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
+                    <!--<Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
                         <Grid RowDefinitions="auto,*">
                             <Label Text="Basic Techniques"
                                    FontSize="16"
@@ -63,11 +66,11 @@
                             <Image Grid.Row="1"
                                    Source="video_placeholder.png"
                                    Aspect="AspectFill"/>
-                            <!-- WebView would go here in actual implementation -->
+                            --><!-- WebView would go here in actual implementation --><!--
                         </Grid>
                     </Frame>
 
-                    <!-- Video Placeholder 2 -->
+                    --><!-- Video Placeholder 2 --><!--
                     <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
                         <Grid RowDefinitions="auto,*">
                             <Label Text="Advanced Tips"
@@ -77,9 +80,25 @@
                             <Image Grid.Row="1"
                                    Source="video_placeholder.png"
                                    Aspect="AspectFill"/>
-                            <!-- WebView would go here in actual implementation -->
+                            --><!-- WebView would go here in actual implementation --><!--
                         </Grid>
-                    </Frame>
+                        
+                    </Frame>-->
+                    <CollectionView
+            x:Name="TipList"
+            HeightRequest="300"
+            ItemsSource="{Binding TipCol}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TipInfo">
+                                <Frame Margin="0,5" Padding="10">
+                                    <Grid ColumnDefinitions="*,*" RowDefinitions="*">
+                                        <Label Grid.Column="0" Text="{Binding Title}" />
+                                        <Label Grid.Column="1" Text="{Binding Topic}" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </VerticalStackLayout>
             </Frame>
 
