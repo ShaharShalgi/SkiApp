@@ -7,7 +7,7 @@ using SkiApp.Services;
 using SkiApp.Models;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using AndroidX.RecyclerView.Widget;
+//using AndroidX.RecyclerView.Widget;
 
 namespace SkiApp.ViewModels
 {
@@ -43,7 +43,7 @@ namespace SkiApp.ViewModels
         public async void SortTips()
         {
             List<TipInfo> tips = new List<TipInfo>();
-            tips = await this.proxy.SortTips(Diff);
+            tips = await this.proxy.SortTips(Diff + 1);
             if (tips != null)
                 TipCol = new ObservableCollection<TipInfo>(tips);
         }
