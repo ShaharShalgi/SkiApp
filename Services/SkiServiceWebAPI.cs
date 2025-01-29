@@ -181,6 +181,41 @@ namespace SkiApp.Services
                 return null;
             }
         }
+
+
+        public async Task<List<TipInfo>> SortTips(int diff)
+        {
+            string url = $"{this.baseUrl}sortTips?diff={diff}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<TipInfo> result = JsonSerializer.Deserialize<List<TipInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         //This methos call the AddTask web API on the server and return the UserTask object with the given ID
         //or null if the call fails
 
