@@ -56,6 +56,7 @@
                                 <x:String>Intermediate - Comfortable on Blue Runs</x:String>
                                 <x:String>Advanced - Black Diamond Ready</x:String>
                                 <x:String>Expert - Double Black Diamond</x:String>
+                                <x:String>All</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
@@ -116,20 +117,52 @@
                         ItemsSource="{Binding TipCol}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:TipInfo">
-                                <Frame Margin="0,5" Padding="10">
-                                    <Grid ColumnDefinitions="*,*" RowDefinitions="*">
-                                        <Label Grid.Column="0" Text="{Binding Title}" />
-                                        <Label Grid.Column="1" Text="{Binding Topic}" />
-                                    </Grid>
+                                <Frame BackgroundColor="White" 
+                                        BorderColor="#e2e8f0" 
+                                        CornerRadius="12" 
+                                        Padding="15"
+                                     HasShadow="True">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                      
+                                        <!--<Label Grid.Column="0" Text="{Binding Title}" />-->
+                                        <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" Grid.Column="0">
+                                      <VerticalStackLayout Spacing="10">
+                                         <Label Text="{Binding Title}"
+                                                FontSize="16"
+                                                FontAttributes="Bold"/>
+                                           <WebView x:Name="Video1WebView"
+                                                    HeightRequest="200"
+                                                    Source="{Binding VideoLink}"/>
+                                        </VerticalStackLayout>
+                                          </Frame>
+                                        
+                                        <Label Grid.Row="0" Text="{Binding Topic}" FontFamily="Aharoni" FontSize="16"/>
+                                        <Label Grid.Row="1" Text="{Binding Difficulty}" FontFamily="Aharoni" FontSize="16"/>
+                                        <Label Grid.Row="2" Text="{Binding Info}" FontFamily="Aharoni" FontSize="16"/>
+                                        </Grid>
+                                   
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </VerticalStackLayout>
             </Frame>
+            <!--<WebView Source="https://www.youtube.com/embed/p3wOPX1Zoaw"/>-->
+            <!--<Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Basic Techniques"
+                                   FontSize="16"
+                                   FontAttributes="Bold"/>
+                    <WebView x:Name="Video1WebView"
+                                    HeightRequest="200"
+                                    Source="https://www.youtube.com/embed/p3wOPX1Zoaw"/>
+                </VerticalStackLayout>
+            </Frame>-->
+
+
 
             <!--  Additional Resources Section  -->
-            <Frame
+            <!--<Frame
                 Padding="15"
                 BackgroundColor="#fff7ed"
                 BorderColor="#fed7aa"
@@ -146,7 +179,7 @@
                         Text="Check back regularly for new videos and tips!"
                         TextColor="#7c2d12" />
                 </VerticalStackLayout>
-            </Frame>
+            </Frame>-->
 
         </VerticalStackLayout>
     </ScrollView>

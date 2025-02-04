@@ -16,6 +16,7 @@ namespace SkiApp.ViewModels
         private SkiServiceWebAPIProxy proxy;
         private IServiceProvider serviceProvider;
         public ICommand SortTipsCommand { get; }
+        public ICommand AdaptCommand { get; }
         private ObservableCollection<TipInfo> tipCol;
         public ObservableCollection<TipInfo> TipCol 
         { get => tipCol;  
@@ -42,11 +43,20 @@ namespace SkiApp.ViewModels
         }
         public async void SortTips()
         {
-            List<TipInfo> tips = new List<TipInfo>();
-            tips = await this.proxy.SortTips(Diff + 1);
-            if (tips != null)
-                TipCol = new ObservableCollection<TipInfo>(tips);
+            if (Diff + 1 == 5)
+            {
+                GetAllTips();
+
+            }
+            else
+            {
+                List<TipInfo> tips = new List<TipInfo>();
+                tips = await this.proxy.SortTips(Diff + 1);
+                if (tips != null)
+                    TipCol = new ObservableCollection<TipInfo>(tips);
+            }
         }
+       
 
         public TipsViewModel(SkiServiceWebAPIProxy proxy, IServiceProvider serviceProvider)
         {
@@ -56,7 +66,9 @@ namespace SkiApp.ViewModels
             GetAllTips();
             SortTipsCommand = new Command(SortTips);
             
+
         }
+
 
     }
 }
