@@ -8,48 +8,41 @@
     Title="Tips"
     x:DataType="viewModels:TipsViewModel">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-
-            <!--  Header Section  -->
-            <Frame
-                Padding="15"
-                BackgroundColor="#f0f9ff"
-                BorderColor="#93c5fd"
-                CornerRadius="10">
+        <VerticalStackLayout Spacing="20" Padding="20">
+            <!-- Header Frame -->
+            <Frame Padding="15"
+                   BackgroundColor="#f0f9ff"
+                   BorderColor="#93c5fd"
+                   CornerRadius="10">
                 <VerticalStackLayout Spacing="10">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="32"
-                        HorizontalOptions="Center"
-                        Text="Learn to Ski"
-                        TextColor="#1e40af" />
+                    <Label FontAttributes="Bold"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           Text="Learn to Ski"
+                           TextColor="#1e40af" />
 
-                    <Label
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        Text="Master the slopes with our comprehensive lessons"
-                        TextColor="#64748b" />
+                    <Label FontSize="16"
+                           HorizontalOptions="Center"
+                           Text="Master the slopes with our comprehensive lessons"
+                           TextColor="#64748b" />
                 </VerticalStackLayout>
             </Frame>
 
-            <!--  Difficulty Picker  -->
-            <Frame
-                Padding="15"
-                BackgroundColor="White"
-                BorderColor="#e2e8f0"
-                CornerRadius="8">
+            <!-- Difficulty Picker Frame -->
+            <Frame Padding="15"
+                   BackgroundColor="White"
+                   BorderColor="#e2e8f0"
+                   CornerRadius="8">
                 <VerticalStackLayout Spacing="10">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="18"
-                        Text="Select Difficulty Level"
-                        TextColor="#334155" />
+                    <Label FontAttributes="Bold"
+                           FontSize="18"
+                           Text="Select Difficulty Level"
+                           TextColor="#334155" />
 
-                    <Picker
-                        x:Name="DifficultyPicker"
-                        Title="Choose your skill level"
-                        BackgroundColor="#f8fafc"
-                        SelectedIndex="{Binding Diff}">
+                    <Picker x:Name="DifficultyPicker"
+                            Title="Choose your skill level"
+                            BackgroundColor="#f8fafc"
+                            SelectedIndex="{Binding Diff}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Beginner - First Time on Slopes</x:String>
@@ -64,123 +57,110 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!--  Video Sections  -->
-            <Frame
-                Padding="15"
-                BackgroundColor="White"
-                BorderColor="#e2e8f0"
-                CornerRadius="8">
+            <!-- Video Sections -->
+            <Frame Padding="15"
+                   BackgroundColor="White"
+                   BorderColor="#e2e8f0"
+                   CornerRadius="8">
                 <VerticalStackLayout Spacing="15">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        Text="Today's Lesson Videos"
-                        TextColor="#334155" />
+                    <Label FontAttributes="Bold"
+                           FontSize="20"
+                           Text="Learn From Pros!"
+                           TextColor="#334155" />
 
-                    <!--  Video Placeholder 1  -->
-                    <!--<Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
-                        <Grid RowDefinitions="auto,*">
-                            <Label Text="Basic Techniques"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,10"/>
-                            <Image Grid.Row="1"
-                                   Source="video_placeholder.png"
-                                   Aspect="AspectFill"/>
-                    -->
-                    <!--  WebView would go here in actual implementation  -->
-                    <!--
-                        </Grid>
-                    </Frame>
-
-                    -->
-                    <!--  Video Placeholder 2  -->
-                    <!--
-                    <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" HeightRequest="200">
-                        <Grid RowDefinitions="auto,*">
-                            <Label Text="Advanced Tips"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,10"/>
-                            <Image Grid.Row="1"
-                                   Source="video_placeholder.png"
-                                   Aspect="AspectFill"/>
-                    -->
-                    <!--  WebView would go here in actual implementation  -->
-                    <!--
-                        </Grid>
-
-                    </Frame>-->
-                    <CollectionView
-                        x:Name="TipList"
-                        HeightRequest="300"
-                        ItemsSource="{Binding TipCol}">
+                    <CollectionView x:Name="TipList"
+                                  ItemsSource="{Binding TipCol}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:TipInfo">
-                                <Frame BackgroundColor="White" 
-                                        BorderColor="#e2e8f0" 
-                                        CornerRadius="12" 
-                                        Padding="15"
-                                     HasShadow="True">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
-                      
-                                        <!--<Label Grid.Column="0" Text="{Binding Title}" />-->
-                                        <Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6" Grid.Column="0">
-                                      <VerticalStackLayout Spacing="10">
-                                         <Label Text="{Binding Title}"
-                                                FontSize="16"
-                                                FontAttributes="Bold"/>
-                                           <WebView x:Name="Video1WebView"
-                                                    HeightRequest="200"
-                                                    Source="{Binding VideoLink}"/>
+                                <Frame Margin="0,0,0,15"
+                                       BackgroundColor="White"
+                                       BorderColor="#e2e8f0"
+                                       CornerRadius="12"
+                                       Padding="15"
+                                       HasShadow="True">
+
+                                    <Grid RowDefinitions="Auto,Auto"
+                                          ColumnDefinitions="2*,*"
+                                          RowSpacing="15"
+                                          ColumnSpacing="15">
+
+                                        <!-- Video Section - Updated -->
+                                        <Frame Grid.Row="0"
+                                               Grid.Column="0"
+                                               Padding="0"
+                                               BackgroundColor="#f8fafc"
+                                               BorderColor="#e2e8f0"
+                                               CornerRadius="8"
+                                               IsClippedToBounds="True">
+                                            <Grid RowDefinitions="Auto,*">
+                                                <!-- Title Bar -->
+                                                <Frame Grid.Row="0"
+                                                       BackgroundColor="#f1f5f9"
+                                                       BorderColor="Transparent"
+                                                       Padding="15,12"
+                                                       CornerRadius="0">
+                                                    <Label Text="{Binding Title}"
+                                                           FontSize="16"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#334155"
+                                                           VerticalOptions="Center"/>
+                                                </Frame>
+
+                                                <!-- Video Container -->
+                                                <Frame Grid.Row="1"
+                                                       Padding="0"
+                                                       BorderColor="Transparent"
+                                                       CornerRadius="0">
+                                                    <WebView HeightRequest="200"
+                                                            Source="{Binding VideoLink}"/>
+                                                </Frame>
+                                            </Grid>
+                                        </Frame>
+
+                                        <!-- Details Section -->
+                                        <VerticalStackLayout Grid.Row="0"
+                                                           Grid.Column="1"
+                                                           Spacing="12">
+                                            <Frame BackgroundColor="#f0f9ff"
+                                                   BorderColor="#93c5fd"
+                                                   Padding="10,5"
+                                                   CornerRadius="6">
+                                                <Label Text="{Binding Topic}"
+                                                       FontFamily="Aharoni"
+                                                       FontSize="16"
+                                                       TextColor="#0369a1"/>
+                                            </Frame>
+
+                                            <Frame BackgroundColor="#f0fdf4"
+                                                   BorderColor="#86efac"
+                                                   Padding="10,5"
+                                                   CornerRadius="6">
+                                                <Label Text="{Binding Difficulty}"
+                                                       FontFamily="Aharoni"
+                                                       FontSize="16"
+                                                       TextColor="#166534"/>
+                                            </Frame>
                                         </VerticalStackLayout>
-                                          </Frame>
-                                        
-                                        <Label Grid.Row="0" Text="{Binding Topic}" FontFamily="Aharoni" FontSize="16"/>
-                                        <Label Grid.Row="1" Text="{Binding Difficulty}" FontFamily="Aharoni" FontSize="16"/>
-                                        <Label Grid.Row="2" Text="{Binding Info}" FontFamily="Aharoni" FontSize="16"/>
-                                        </Grid>
-                                   
+
+                                        <!-- Description -->
+                                        <Frame Grid.Row="1"
+                                               Grid.ColumnSpan="2"
+                                               BackgroundColor="#fafafa"
+                                               BorderColor="#e5e5e5"
+                                               Padding="10"
+                                               CornerRadius="6">
+                                            <Label Text="{Binding Info}"
+                                                   FontFamily="Aharoni"
+                                                   FontSize="14"
+                                                   TextColor="#525252"/>
+                                        </Frame>
+                                    </Grid>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </VerticalStackLayout>
             </Frame>
-            <!--<WebView Source="https://www.youtube.com/embed/p3wOPX1Zoaw"/>-->
-            <!--<Frame BackgroundColor="#f1f5f9" BorderColor="#cbd5e1" CornerRadius="6">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Basic Techniques"
-                                   FontSize="16"
-                                   FontAttributes="Bold"/>
-                    <WebView x:Name="Video1WebView"
-                                    HeightRequest="200"
-                                    Source="https://www.youtube.com/embed/p3wOPX1Zoaw"/>
-                </VerticalStackLayout>
-            </Frame>-->
-
-
-
-            <!--  Additional Resources Section  -->
-            <!--<Frame
-                Padding="15"
-                BackgroundColor="#fff7ed"
-                BorderColor="#fed7aa"
-                CornerRadius="8">
-                <VerticalStackLayout Spacing="10">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="18"
-                        Text="Additional Resources"
-                        TextColor="#9a3412" />
-
-                    <Label
-                        FontSize="14"
-                        Text="Check back regularly for new videos and tips!"
-                        TextColor="#7c2d12" />
-                </VerticalStackLayout>
-            </Frame>-->
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

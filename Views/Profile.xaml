@@ -2,11 +2,89 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiApp.Views.Profile"
-             Title="Profile">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Profile"
+              xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+             BackgroundColor="#f5f5f5"
+              x:DataType="ViewModels:ProfileViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Image Source="snowbanner.jpg"/>
+            <Grid RowSpacing="20" 
+              Padding="20"
+              VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+
+            <Frame Grid.Row="0"
+                   BackgroundColor="White"
+                   BorderColor="Transparent"
+                   CornerRadius="15"
+                   Margin="0,10"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="20">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Email"
+                               FontSize="14"
+                               TextColor="#666666"
+                               FontAttributes="Bold"/>
+                        <Label Text="{Binding Email}"
+                               FontSize="16"
+                               TextColor="#333333"/>
+                        <BoxView HeightRequest="1"
+                                BackgroundColor="#e0e0e0"
+                                Margin="0,5,0,0"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Username"
+                               FontSize="14"
+                               TextColor="#666666"
+                               FontAttributes="Bold"/>
+                            <Label Text="{Binding Username}"
+                               FontSize="16"
+                               TextColor="#333333"/>
+                        <BoxView HeightRequest="1"
+                                BackgroundColor="#e0e0e0"
+                                Margin="0,5,0,0"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Gender"
+                               FontSize="14"
+                               TextColor="#666666"
+                               FontAttributes="Bold"/>
+                            <Label Text="{Binding Password}"
+                               FontSize="16"
+                               TextColor="#333333"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Grid.Row="1" 
+                                Spacing="15">
+                <Button Text="Change Information"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        TextColor="White"
+                        BackgroundColor="#007AFF"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Margin="0,10,0,0"/>
+
+                <Button Text="Upgrade to Professional"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        TextColor="#1a1a1a"
+                        BackgroundColor="Goldenrod"
+                        CornerRadius="10"
+                        HeightRequest="50"/>
+            </VerticalStackLayout>
+        </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

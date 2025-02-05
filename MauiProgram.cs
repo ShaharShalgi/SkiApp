@@ -30,6 +30,7 @@ namespace SkiApp
             builder.Services.AddTransient<Resorts>();
             builder.Services.AddTransient<Coaches>();
             builder.Services.AddTransient<Profile>();
+            builder.Services.AddTransient<ProfileViewModel>();
             builder.Services.AddTransient<Homepage>();
             builder.Services.AddTransient<HomepageViewModel>();
             builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
