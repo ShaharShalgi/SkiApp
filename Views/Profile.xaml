@@ -58,7 +58,7 @@
                                FontSize="14"
                                TextColor="#666666"
                                FontAttributes="Bold"/>
-                            <Label Text="{Binding Password}"
+                            <Label Text="{Binding Gender}"
                                FontSize="16"
                                TextColor="#333333"/>
                     </VerticalStackLayout>
@@ -74,7 +74,8 @@
                         BackgroundColor="#007AFF"
                         CornerRadius="10"
                         HeightRequest="50"
-                        Margin="0,10,0,0"/>
+                        Margin="0,10,0,0"
+                        Command="{Binding UpdateRequestCommand}"/>
 
                 <Button Text="Upgrade to Professional"
                         FontAttributes="Bold"
@@ -83,7 +84,61 @@
                         BackgroundColor="Goldenrod"
                         CornerRadius="10"
                         HeightRequest="50"/>
-            </VerticalStackLayout>
+                    <VerticalStackLayout
+                             x:Name="ProfessionalFields"
+                             IsVisible="{Binding UpdateRequest}"
+                             Spacing="15"
+                             IsEnabled="{Binding NotInServerCall}">
+                        <Entry x:Name="LocEntry" Placeholder="Name" Text="{Binding Username}" />
+
+                        <Entry x:Name="PriceEntry" Placeholder="Password" Text="{Binding Password}"  IsPassword="True"/>
+                        <Entry x:Name="TextEntry" Placeholder="Email" Text="{Binding Email}" />
+
+
+
+
+                        <Picker x:Name="TypePicker" Title="Gender" SelectedItem="{Binding Gender}">
+                            <Picker.Items>
+                                <x:String>Male</x:String>
+                                <x:String>Female</x:String>
+                                <x:String>Other</x:String>
+
+                            </Picker.Items>
+                        </Picker>
+                        <Button Text="Save"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                TextColor="White"
+                                BackgroundColor="#007AFF"
+                                CornerRadius="10"
+                                HeightRequest="50"
+                                Margin="0,10,0,0"
+                                 Command="{Binding SaveCommand}"/>
+                        <Grid ColumnDefinitions="1*" RowDefinitions="1*, 1*, 1*, 1*">
+                            <Label
+          Grid.Row="1"
+          FontSize="20"
+          HorizontalTextAlignment="Center"
+          IsVisible="{Binding ShowNameError}"
+          Text="{Binding NameError}"
+          TextColor="MediumVioletRed" />
+                            <Label
+          Grid.Row="2"
+          FontSize="20"
+          HorizontalTextAlignment="Center"
+          IsVisible="{Binding ShowPasswordError}"
+          Text="{Binding PasswordError}"
+          TextColor="MediumVioletRed" />
+                            <Label
+          Grid.Row="4"
+          FontSize="20"
+          HorizontalTextAlignment="Center"
+          IsVisible="{Binding ShowEmailError}"
+          Text="{Binding EmailError}"
+          TextColor="MediumVioletRed" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
         </Grid>
         </VerticalStackLayout>
     </ScrollView>
