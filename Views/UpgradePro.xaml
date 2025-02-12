@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiApp.Views.UpgradePro"
+             
+             x:DataType="viewModels:ProfileViewModel"
+              xmlns:viewModels="clr-namespace:SkiApp.ViewModels"
+             Title="UpgradePro">
+    <ScrollView>
+        <Grid RowSpacing="25" 
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+              Padding="20">
+
+            <!-- Header -->
+            <VerticalStackLayout Grid.Row="0" 
+                               Spacing="5">
+                <Label Text="Upgrade Account"
+                       FontSize="32"
+                       TextColor="{StaticResource Primary}"
+                       HorizontalOptions="Center"/>
+                <Label Text="Please fill in your details"
+                       FontSize="14"
+                       TextColor="Gray"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Username Entry -->
+            <Frame Grid.Row="1"
+                   BorderColor="LightGray"
+                   CornerRadius="8"
+                   HasShadow="True"
+                   Padding="15,5">
+                <Entry Placeholder="Location"
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       FontSize="16"
+                       Text="{Binding Loc}"/>
+            </Frame>
+
+            <!-- Email Entry -->
+            <Frame Grid.Row="2"
+                   BorderColor="LightGray"
+                   CornerRadius="8"
+                   HasShadow="True"
+                   Padding="15,5">
+                <Entry Placeholder="Price Per Hour/Night"
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       FontSize="16"
+                       Text="{Binding Price}"/>
+            </Frame>
+
+            <!-- Password Entry -->
+            <Frame Grid.Row="3"
+                   BorderColor="LightGray"
+                   CornerRadius="8"
+                   HasShadow="True"
+                   Padding="15,5">
+                <Entry Placeholder="Details"
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       FontSize="16"
+                       Text="{Binding Txt}"/>
+            </Frame>
+
+            <!-- Account Type Picker -->
+            <Frame Grid.Row="4"
+                   BorderColor="LightGray"
+                   CornerRadius="8"
+                   HasShadow="True"
+                   Padding="15,5">
+                <Picker Title="Select Account Type"
+                        TitleColor="Gray"
+                        FontSize="16"
+                        SelectedIndex="{Binding TypeId}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Coach</x:String>
+                            <x:String>Manager</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Frame>
+
+            <!-- Register Button -->
+            <Button Grid.Row="5"
+                    Text="Register"
+                    FontSize="18"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"
+                    BackgroundColor="{StaticResource Primary}"
+                    Command="{Binding UpgradeProCommand}"/>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -83,7 +83,8 @@
                         TextColor="#1a1a1a"
                         BackgroundColor="Goldenrod"
                         CornerRadius="10"
-                        HeightRequest="50"/>
+                        HeightRequest="50"
+                        Command="{Binding OnUpgradeCommand}"/>
                     <VerticalStackLayout
                              x:Name="ProfessionalFields"
                              IsVisible="{Binding UpdateRequest}"

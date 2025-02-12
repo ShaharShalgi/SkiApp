@@ -25,8 +25,14 @@ namespace SkiApp.ViewModels
             Gender = u.Gender;
             Email = u.Email;
             Password = u.Pass;
+            //if (u.IsPro)
+            //{
+            //    Loc = u.L
+            //}
             UpdateRequestCommand = new Command(RequestUpdate);
             SaveCommand = new Command(OnSave);
+            UpgradeProCommand = new Command(Upgrade);
+            OnUpgradeCommand = new Command(OnUpgrade);
             NameError = "Name is required";
             UpdateRequest = false;
             EmailError = "Email is required";
@@ -237,8 +243,8 @@ namespace SkiApp.ViewModels
 
                 if (success)
                 {
-                    RequestUpdate();
                     InServerCall = false;
+                    UpdateRequest = false;
                     await Shell.Current.DisplayAlert("Save Profile", "Profile saved successfully", "ok");
                     
                 }
@@ -252,6 +258,91 @@ namespace SkiApp.ViewModels
 
             }
 
+           
+
+        }
+
+        private string loc;
+        public string Loc
+        {
+            get => loc;
+            set
+            {
+                loc = value;
+                OnPropertyChanged("Loc");
+            }
+        }
+        private int typeId;
+        public int TypeId
+        {
+            get => typeId;
+            set
+            {
+                typeId = value;
+                OnPropertyChanged("TypeId");
+            }
+        }
+        private double price;
+        public double Price
+        {
+            get => price;
+            set
+            {
+                price = value;
+                OnPropertyChanged("Price");
+            }
+        }
+        private string txt;
+        public string Txt
+        {
+            get => txt;
+            set
+            {
+                txt = value;
+                OnPropertyChanged("Txt");
+            }
+        }
+        public ICommand UpgradeProCommand { get; }
+        public ICommand OnUpgradeCommand { get; }
+        private void OnUpgrade()
+        {
+
+            // Navigate to the Upgrade View page
+            ((App)Application.Current).MainPage.Navigation.PushAsync(serviceProvider.GetService<UpgradePro>());
+        }
+        public async void Upgrade()
+        {
+
+            VisitorInfo theUser = ((App)App.Current).LoggedInUser;
+            theUser.IsPro = true;
+           
+            InServerCall = true;
+            bool success = await proxy.UpdateUser(theUser);
+            if (success) 
+            {
+                var newPro = new ProfessionalInfo
+                {
+                    Loc = this.Loc,
+                    TypeId = this.TypeId + 1,
+                    Price = this.Price,
+                    UserId = theUser.UserID,
+                    Txt = this.Txt,
+                    Rating = 0
+                };
+                InServerCall = true;
+                newPro = await proxy.SignUpPro(newPro);
+                InServerCall = false;
+
+                ((App)Application.Current).MainPage.Navigation.PushAsync(serviceProvider.GetService<Profile>());
+
+            }
+            else
+            {
+                InServerCall = false;
+                //If the registration failed, display an error message
+                string errorMsg = "Upgrade failed. Please try again.";
+                await Shell.Current.DisplayAlert("Upgrade Profile", errorMsg, "ok");
+            }
            
 
         }
