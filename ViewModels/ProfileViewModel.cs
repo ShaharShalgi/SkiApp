@@ -25,10 +25,12 @@ namespace SkiApp.ViewModels
             Gender = u.Gender;
             Email = u.Email;
             Password = u.Pass;
-            //if (u.IsPro)
-            //{
-            //    Loc = u.L
-            //}
+            IsProfessional = u.IsPro;
+            if (IsProfessional)
+            {
+                ShowProff(u.UserID);
+            }
+            
             UpdateRequestCommand = new Command(RequestUpdate);
             SaveCommand = new Command(OnSave);
             UpgradeProCommand = new Command(Upgrade);
@@ -37,6 +39,28 @@ namespace SkiApp.ViewModels
             UpdateRequest = false;
             EmailError = "Email is required";
             PasswordError = "Password must be at least 4 characters long and contain letters and numbers";
+        }
+        private bool isProfessional;
+        public bool IsProfessional
+        {
+            get { return isProfessional; }
+            set
+            {
+                isProfessional = value;
+                OnPropertyChanged();
+            
+            }
+        }
+
+        private async void ShowProff(int Id)
+        {
+            
+            ProfessionalInfo p = new ProfessionalInfo();
+            p = await proxy.GetPro(Id);
+            Loc = p.Loc;
+            Price = p.Price;
+            Txt = p.Txt;
+            TypeId = p.TypeId;
         }
 
 
@@ -107,6 +131,7 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("Password");
             }
         }
+
         private bool showPasswordError;
 
         public bool ShowPasswordError
@@ -228,6 +253,10 @@ namespace SkiApp.ViewModels
             ValidateName();
             ValidateEmail();
             ValidatePassword();
+
+           
+
+
             if (!ShowPasswordError && !ShowEmailError && !ShowNameError)
             {
 
@@ -237,8 +266,9 @@ namespace SkiApp.ViewModels
                 theUser.Gender = Gender;
                 theUser.Email = Email;
                 theUser.Pass = Password;
-               
+                
                 InServerCall = true;
+                
                 bool success = await proxy.UpdateUser(theUser);
 
                 if (success)
@@ -272,8 +302,8 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("Loc");
             }
         }
-        private int typeId;
-        public int TypeId
+        private int? typeId;
+        public int? TypeId
         {
             get => typeId;
             set
@@ -282,8 +312,8 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("TypeId");
             }
         }
-        private double price;
-        public double Price
+        private double? price;
+        public double? Price
         {
             get => price;
             set
