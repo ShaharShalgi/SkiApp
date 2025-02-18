@@ -267,7 +267,7 @@ public class SignUpViewModel : ViewModelBase
                 Email = this.Email,
                 Gender = this.Gender,
                 UserID = 0,
-                 IsPro = !IsProfessional
+                 IsPro = IsProfessional
 
             };
             InServerCall = true;

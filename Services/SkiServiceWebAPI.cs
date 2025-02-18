@@ -219,7 +219,7 @@ namespace SkiApp.Services
 
         public async Task<ProfessionalInfo?> GetPro(int Id)
         {
-            string url = $"{this.baseUrl}getPro?diff={Id}";
+            string url = $"{this.baseUrl}getPro?Id={Id}";
             try
             {
                 // Call the server API

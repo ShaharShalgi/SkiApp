@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
+//using Android.Media;
 using SkiApp.Models;
 using SkiApp.Services;
 using SkiApp.Views;
@@ -26,6 +27,10 @@ namespace SkiApp.ViewModels
             Email = u.Email;
             Password = u.Pass;
             IsProfessional = u.IsPro;
+            Username2 = u.Username;
+            Gender2 = u.Gender;
+            Email2 = u.Email;
+           
             if (IsProfessional)
             {
                 ShowProff(u.UserID);
@@ -60,7 +65,16 @@ namespace SkiApp.ViewModels
             Loc = p.Loc;
             Price = p.Price;
             Txt = p.Txt;
+            Rating = p.Rating;
             TypeId = p.TypeId;
+            if (TypeId == 1)
+            {
+                Type = "Coach";
+            }
+            else
+            {
+                Type = "Manager";
+            }
         }
 
 
@@ -74,6 +88,18 @@ namespace SkiApp.ViewModels
                 username = value;
                 //ValidateName();
                 OnPropertyChanged("Username");
+            }
+        }
+        private string username2;
+
+        public string Username2
+        {
+            get => username2;
+            set
+            {
+                username2 = value;
+                //ValidateName();
+                OnPropertyChanged("Username2");
             }
         }
         private bool showNameError;
@@ -116,6 +142,17 @@ namespace SkiApp.ViewModels
             {
                 gender = value;
                 OnPropertyChanged("Gender");
+            }
+        }
+        private string gender2;
+
+        public string Gender2
+        {
+            get => gender2;
+            set
+            {
+                gender2 = value;
+                OnPropertyChanged("Gender2");
             }
         }
 
@@ -177,6 +214,18 @@ namespace SkiApp.ViewModels
                 email = value;
                 //ValidateEmail();
                 OnPropertyChanged("Email");
+            }
+        }
+        private string email2;
+
+        public string Email2
+        {
+            get => email2;
+            set
+            {
+                email2 = value;
+                //ValidateEmail();
+                OnPropertyChanged("Email2");
             }
         }
         private bool showEmailError;
@@ -275,6 +324,9 @@ namespace SkiApp.ViewModels
                 {
                     InServerCall = false;
                     UpdateRequest = false;
+                    Username2 = theUser.Username;
+                    Gender2 = theUser.Gender;
+                    Email2 = theUser.Email;
                     await Shell.Current.DisplayAlert("Save Profile", "Profile saved successfully", "ok");
                     
                 }
@@ -322,6 +374,16 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("Price");
             }
         }
+        private double? rating;
+        public double? Rating
+        {
+            get => rating;
+            set
+            {
+                rating = value;
+                OnPropertyChanged("Rating");
+            }
+        }
         private string txt;
         public string Txt
         {
@@ -332,6 +394,17 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("Txt");
             }
         }
+        private string type;
+        public string Type
+        {
+            get => type;
+            set
+            {
+                type = value;
+                OnPropertyChanged("Type");
+            }
+        }
+
         public ICommand UpgradeProCommand { get; }
         public ICommand OnUpgradeCommand { get; }
         private void OnUpgrade()
