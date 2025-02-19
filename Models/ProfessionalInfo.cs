@@ -22,5 +22,7 @@ namespace SkiApp.Models
 
 
         public string? Txt { get; set; }
+        
+        public int? RaterNum { get; set; }
     }
 }

@@ -445,7 +445,8 @@ namespace SkiApp.ViewModels
                     Price = this.Price,
                     UserId = theUser.UserID,
                     Txt = this.Txt,
-                    Rating = 0
+                    Rating = 0,
+                    RaterNum = 0
                 };
                 InServerCall = true;
                 newPro = await proxy.SignUpPro(newPro);
