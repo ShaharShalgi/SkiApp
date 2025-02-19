@@ -34,6 +34,7 @@ namespace SkiApp
             builder.Services.AddTransient<Homepage>();
             builder.Services.AddTransient<HomepageViewModel>();
             builder.Services.AddTransient<UpgradePro>();
+            builder.Services.AddTransient<UploadPost>();
             builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
 
 

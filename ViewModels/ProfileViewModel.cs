@@ -40,6 +40,7 @@ namespace SkiApp.ViewModels
             SaveCommand = new Command(OnSave);
             UpgradeProCommand = new Command(Upgrade);
             OnUpgradeCommand = new Command(OnUpgrade);
+            OnPostCommand = new Command(OnPost);
             NameError = "Name is required";
             UpdateRequest = false;
             EmailError = "Email is required";
@@ -55,6 +56,14 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged();
             
             }
+        }
+
+
+        
+        public bool IsProfessional2
+        {
+            get { return !isProfessional; }
+           
         }
 
         private async void ShowProff(int Id)
@@ -407,6 +416,12 @@ namespace SkiApp.ViewModels
 
         public ICommand UpgradeProCommand { get; }
         public ICommand OnUpgradeCommand { get; }
+        public ICommand OnPostCommand { get; }
+
+        private void OnPost()
+        {
+            ((App)Application.Current).MainPage.Navigation.PushAsync(serviceProvider.GetService<UploadPost>());
+        }
         private void OnUpgrade()
         {
 

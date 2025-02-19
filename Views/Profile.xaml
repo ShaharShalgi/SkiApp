@@ -1,193 +1,232 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SkiApp.Views.Profile"
-             Title="Profile"
-              xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
-             BackgroundColor="#f5f5f5"
-              x:DataType="ViewModels:ProfileViewModel">
+<ContentPage
+    x:Class="SkiApp.Views.Profile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+    Title="Profile"
+    x:DataType="ViewModels:ProfileViewModel"
+    BackgroundColor="#f5f5f5">
     <ScrollView>
         <VerticalStackLayout>
-            <Image Source="snowbanner.jpg"/>
+            <Image Source="snowbanner.jpg" />
 
-            <!-- Added subtle Manager title -->
-            <Border Margin="20,10,20,0"
+            <!--  Added subtle Manager title  -->
+            <Border
+                Margin="20,10,20,0"
                 Padding="12,8"
                 BackgroundColor="#F8FAFC"
+                IsVisible="{Binding IsProfessional}"
                 Stroke="#E2E8F0"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 8" IsVisible="{Binding IsProfessional}">
-                <Label Text="{Binding Type}"
-                   FontFamily="Aharoni"
-                   FontSize="18"
-                   TextColor="#64748B"
-                   HorizontalOptions="Start"
-                   FontAttributes="Bold"
-                   Opacity="0.9"
-                       IsVisible="{Binding IsProfessional}"/>
+                StrokeShape="RoundRectangle 8"
+                StrokeThickness="1">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="Aharoni"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsProfessional}"
+                    Opacity="0.9"
+                    Text="{Binding Type}"
+                    TextColor="#64748B" />
             </Border>
 
 
-            <Grid RowSpacing="20" 
-              Padding="20"
-              VerticalOptions="Center">
+            <Grid
+                Padding="20"
+                RowSpacing="20"
+                VerticalOptions="Center">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Frame Grid.Row="0"
-                   BackgroundColor="White"
-                   BorderColor="Transparent"
-                   CornerRadius="15"
-                   Margin="0,10"
-                   Padding="24"
-                   HasShadow="True">
+                <Frame
+                    Grid.Row="0"
+                    Margin="0,10"
+                    Padding="24"
+                    BackgroundColor="White"
+                    BorderColor="Transparent"
+                    CornerRadius="15"
+                    HasShadow="True">
 
                     <VerticalStackLayout Spacing="24">
-                        <!-- Email Section -->
+                        <!--  Email Section  -->
                         <VerticalStackLayout Spacing="8">
-                            <Label Text="Email"
-                               FontSize="13"
-                               TextColor="#94A3B8"
-                               FontAttributes="Bold"
-                               Margin="0,0,0,4"/>
-                            <Label Text="{Binding Email2}"
-                               FontSize="16"
-                               TextColor="#1E293B"
-                               Margin="0,0,0,8"/>
-                            <BoxView HeightRequest="1"
-                                BackgroundColor="#E2E8F0"/>
+                            <Label
+                                Margin="0,0,0,4"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                Text="Email"
+                                TextColor="#94A3B8" />
+                            <Label
+                                Margin="0,0,0,8"
+                                FontSize="16"
+                                Text="{Binding Email2}"
+                                TextColor="#1E293B" />
+                            <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                         </VerticalStackLayout>
 
-                        <!-- Username Section -->
+                        <!--  Username Section  -->
                         <VerticalStackLayout Spacing="8">
-                            <Label Text="Username"
-                               FontSize="13"
-                               TextColor="#94A3B8"
-                               FontAttributes="Bold"
-                               Margin="0,0,0,4"/>
-                            <Label Text="{Binding Username2}"
-                               FontSize="16"
-                               TextColor="#1E293B"
-                               Margin="0,0,0,8"/>
-                            <BoxView HeightRequest="1"
-                                BackgroundColor="#E2E8F0"/>
+                            <Label
+                                Margin="0,0,0,4"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                Text="Username"
+                                TextColor="#94A3B8" />
+                            <Label
+                                Margin="0,0,0,8"
+                                FontSize="16"
+                                Text="{Binding Username2}"
+                                TextColor="#1E293B" />
+                            <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                         </VerticalStackLayout>
 
-                        <!-- Gender Section -->
+                        <!--  Gender Section  -->
                         <VerticalStackLayout Spacing="8">
-                            <Label Text="Gender"
-                               FontSize="13"
-                               TextColor="#94A3B8"
-                               FontAttributes="Bold"
-                               Margin="0,0,0,4"/>
-                            <Label Text="{Binding Gender2}"
-                               FontSize="16"
-                               TextColor="#1E293B"
-                               Margin="0,0,0,8"/>
-                            <BoxView HeightRequest="1"
-                                BackgroundColor="#E2E8F0"/>
+                            <Label
+                                Margin="0,0,0,4"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                Text="Gender"
+                                TextColor="#94A3B8" />
+                            <Label
+                                Margin="0,0,0,8"
+                                FontSize="16"
+                                Text="{Binding Gender2}"
+                                TextColor="#1E293B" />
+                            <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout IsVisible="{Binding IsProfessional}">
-                            <!-- Price Section -->
-                            <VerticalStackLayout Spacing="8" Margin="0,0,0,24">
-                                <Label Text="Price"
-                                   FontSize="13"
-                                   TextColor="#94A3B8"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,4"/>
-                                <Label Text="{Binding Price}"
-                                   FontSize="16"
-                                   TextColor="#1E293B"
-                                   Margin="0,0,0,8"/>
-                                <BoxView HeightRequest="1"
-                                    BackgroundColor="#E2E8F0"/>
+                            <!--  Price Section  -->
+                            <VerticalStackLayout Margin="0,0,0,24" Spacing="8">
+                                <Label
+                                    Margin="0,0,0,4"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Text="Price"
+                                    TextColor="#94A3B8" />
+                                <Label
+                                    Margin="0,0,0,8"
+                                    FontSize="16"
+                                    Text="{Binding Price}"
+                                    TextColor="#1E293B" />
+                                <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                             </VerticalStackLayout>
 
-                            <!-- Location Section -->
-                            <VerticalStackLayout Spacing="8" Margin="0,0,0,24">
-                                <Label Text="Location"
-                                   FontSize="13"
-                                   TextColor="#94A3B8"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,4"/>
-                                <Label Text="{Binding Loc}"
-                                   FontSize="16"
-                                   TextColor="#1E293B"
-                                   Margin="0,0,0,8"/>
-                                <BoxView HeightRequest="1"
-                                    BackgroundColor="#E2E8F0"/>
+                            <!--  Location Section  -->
+                            <VerticalStackLayout Margin="0,0,0,24" Spacing="8">
+                                <Label
+                                    Margin="0,0,0,4"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Text="Location"
+                                    TextColor="#94A3B8" />
+                                <Label
+                                    Margin="0,0,0,8"
+                                    FontSize="16"
+                                    Text="{Binding Loc}"
+                                    TextColor="#1E293B" />
+                                <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                             </VerticalStackLayout>
 
-                            <!-- Rating Section -->
-                            <VerticalStackLayout Spacing="8" Margin="0,0,0,24">
-                                <Label Text="Rating"
-                                   FontSize="13"
-                                   TextColor="#94A3B8"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,4"/>
-                                <Label Text="{Binding Rating}"
-                                   FontSize="16"
-                                   TextColor="#1E293B"
-                                   Margin="0,0,0,8"/>
-                                <BoxView HeightRequest="1"
-                                    BackgroundColor="#E2E8F0"/>
+                            <!--  Rating Section  -->
+                            <VerticalStackLayout Margin="0,0,0,24" Spacing="8">
+                                <Label
+                                    Margin="0,0,0,4"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Text="Rating"
+                                    TextColor="#94A3B8" />
+                                <Label
+                                    Margin="0,0,0,8"
+                                    FontSize="16"
+                                    Text="{Binding Rating}"
+                                    TextColor="#1E293B" />
+                                <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                             </VerticalStackLayout>
 
-                            <!-- Info Section -->
+                            <!--  Info Section  -->
                             <VerticalStackLayout Spacing="8">
-                                <Label Text="Info"
-                                   FontSize="13"
-                                   TextColor="#94A3B8"
-                                   FontAttributes="Bold"
-                                   Margin="0,0,0,4"/>
-                                <Label Text="{Binding Txt}"
-                                   FontSize="16"
-                                   TextColor="#1E293B"
-                                   Margin="0,0,0,8"/>
-                                <BoxView HeightRequest="1"
-                                    BackgroundColor="#E2E8F0"/>
+                                <Label
+                                    Margin="0,0,0,4"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Text="Info"
+                                    TextColor="#94A3B8" />
+                                <Label
+                                    Margin="0,0,0,8"
+                                    FontSize="16"
+                                    Text="{Binding Txt}"
+                                    TextColor="#1E293B" />
+                                <BoxView BackgroundColor="#E2E8F0" HeightRequest="1" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
 
-                <VerticalStackLayout Grid.Row="1" 
-                                Spacing="15">
-                <Button Text="Change Information"
-                        FontAttributes="Bold"
-                        FontSize="16"
-                        TextColor="White"
-                        BackgroundColor="#007AFF"
-                        CornerRadius="10"
-                        HeightRequest="50"
+                <VerticalStackLayout Grid.Row="1" Spacing="15">
+                    <Button
                         Margin="0,10,0,0"
-                        Command="{Binding UpdateRequestCommand}"/>
-
-                <Button Text="Upgrade to Professional"
+                        BackgroundColor="#007AFF"
+                        Command="{Binding UpdateRequestCommand}"
+                        CornerRadius="10"
                         FontAttributes="Bold"
                         FontSize="16"
-                        TextColor="#1a1a1a"
-                        BackgroundColor="Goldenrod"
-                        CornerRadius="10"
                         HeightRequest="50"
-                        Command="{Binding OnUpgradeCommand}"/>
+                        IsVisible="{Binding IsProfessional2}"
+                        Text="Change Information"
+                        TextColor="White" />
+
+                    <Button
+                        BackgroundColor="Goldenrod"
+                        Command="{Binding OnUpgradeCommand}"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        IsVisible="{Binding IsProfessional2}"
+                        Text="Upgrade to Professional"
+                        TextColor="#1a1a1a" />
+                    <Button
+                        BackgroundColor="Goldenrod"
+                        Command="{Binding OnPostCommand}"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        IsVisible="{Binding IsProfessional}"
+                        Text="Upload Post"
+                        TextColor="#1a1a1a" />
                     <VerticalStackLayout
-                             x:Name="ProfessionalFields"
-                             IsVisible="{Binding UpdateRequest}"
-                             Spacing="15"
-                             IsEnabled="{Binding NotInServerCall}">
-                        <Entry x:Name="LocEntry" Placeholder="Name" Text="{Binding Username}" />
+                        x:Name="ProfessionalFields"
+                        IsEnabled="{Binding NotInServerCall}"
+                        IsVisible="{Binding UpdateRequest}"
+                        Spacing="15">
+                        <Entry
+                            x:Name="LocEntry"
+                            Placeholder="Name"
+                            Text="{Binding Username}" />
 
-                        <Entry x:Name="PriceEntry" Placeholder="Password" Text="{Binding Password}"  IsPassword="True"/>
-                        <Entry x:Name="TextEntry" Placeholder="Email" Text="{Binding Email}" />
+                        <Entry
+                            x:Name="PriceEntry"
+                            IsPassword="True"
+                            Placeholder="Password"
+                            Text="{Binding Password}" />
+                        <Entry
+                            x:Name="TextEntry"
+                            Placeholder="Email"
+                            Text="{Binding Email}" />
 
 
 
 
-                        <Picker x:Name="TypePicker" Title="Gender" SelectedItem="{Binding Gender}">
+                        <Picker
+                            x:Name="TypePicker"
+                            Title="Gender"
+                            SelectedItem="{Binding Gender}">
                             <Picker.Items>
                                 <x:String>Male</x:String>
                                 <x:String>Female</x:String>
@@ -195,41 +234,42 @@
 
                             </Picker.Items>
                         </Picker>
-                        <Button Text="Save"
-                                FontAttributes="Bold"
-                                FontSize="16"
-                                TextColor="White"
-                                BackgroundColor="#007AFF"
-                                CornerRadius="10"
-                                HeightRequest="50"
-                                Margin="0,10,0,0"
-                                 Command="{Binding SaveCommand}"/>
+                        <Button
+                            Margin="0,10,0,0"
+                            BackgroundColor="#007AFF"
+                            Command="{Binding SaveCommand}"
+                            CornerRadius="10"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            Text="Save"
+                            TextColor="White" />
                         <Grid ColumnDefinitions="1*" RowDefinitions="1*, 1*, 1*, 1*">
                             <Label
-          Grid.Row="1"
-          FontSize="20"
-          HorizontalTextAlignment="Center"
-          IsVisible="{Binding ShowNameError}"
-          Text="{Binding NameError}"
-          TextColor="MediumVioletRed" />
+                                Grid.Row="1"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                IsVisible="{Binding ShowNameError}"
+                                Text="{Binding NameError}"
+                                TextColor="MediumVioletRed" />
                             <Label
-          Grid.Row="2"
-          FontSize="20"
-          HorizontalTextAlignment="Center"
-          IsVisible="{Binding ShowPasswordError}"
-          Text="{Binding PasswordError}"
-          TextColor="MediumVioletRed" />
+                                Grid.Row="2"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                IsVisible="{Binding ShowPasswordError}"
+                                Text="{Binding PasswordError}"
+                                TextColor="MediumVioletRed" />
                             <Label
-          Grid.Row="4"
-          FontSize="20"
-          HorizontalTextAlignment="Center"
-          IsVisible="{Binding ShowEmailError}"
-          Text="{Binding EmailError}"
-          TextColor="MediumVioletRed" />
+                                Grid.Row="4"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                IsVisible="{Binding ShowEmailError}"
+                                Text="{Binding EmailError}"
+                                TextColor="MediumVioletRed" />
                         </Grid>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
-        </Grid>
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

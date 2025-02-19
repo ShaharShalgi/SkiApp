@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SkiApp.Views.UploadPost"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+    Title="UploadPost"
+    x:DataType="ViewModels:ProfileViewModel"
+    BackgroundColor="#f5f5f5">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!--  Title  -->
+            <Label FontSize="Medium" Text="Name" />
+            <Entry
+                x:Name="TitleEntry"
+                Placeholder="Enter listing name"
+                Text="{Binding Username2}" />
+
+            <!--  Price  -->
+            <Label FontSize="Medium" Text="Price" />
+            <HorizontalStackLayout Spacing="10">
+                <Entry
+                    x:Name="PriceEntry"
+                    Keyboard="Numeric"
+                    Placeholder="Enter price"
+                    Text="{Binding Price}"
+                    WidthRequest="150" />
+                <Label FontSize="Medium" Text="USD" />
+            </HorizontalStackLayout>
+
+            <!--  Location  -->
+            <Label FontSize="Medium" Text="Country" />
+            <Entry
+                x:Name="LocationEntry"
+                Placeholder="Enter location"
+                Text="{Binding Loc}" />
+
+            <!--  Description  -->
+            <Label FontSize="Medium" Text="Description" />
+            <Editor
+                x:Name="DescriptionEditor"
+                AutoSize="TextChanges"
+                HeightRequest="100"
+                Text="{Binding Txt}" />
+
+
+
+            <!--  Images  -->
+            <Label FontSize="Medium" Text="Images" />
+            <HorizontalStackLayout x:Name="ImagePreviewStack" Spacing="10" />
+            <Button x:Name="AddImagesButton" Text="Add Images" />
+
+            <!--  Submit Button  -->
+            <Button
+                x:Name="SubmitButton"
+                Margin="0,20,0,0"
+                BackgroundColor="Goldenrod"
+                Text="Post Listing"
+                TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
