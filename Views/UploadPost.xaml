@@ -14,7 +14,7 @@
             <Entry
                 x:Name="TitleEntry"
                 Placeholder="Enter listing name"
-                Text="{Binding Username2}" />
+                Text="{Binding Username}" />
 
             <!--  Price  -->
             <Label FontSize="Medium" Text="Price" />
@@ -48,7 +48,23 @@
             <!--  Images  -->
             <Label FontSize="Medium" Text="Images" />
             <HorizontalStackLayout x:Name="ImagePreviewStack" Spacing="10" />
-            <Button x:Name="AddImagesButton" Text="Add Images" />
+            <CollectionView HeightRequest="120" ItemsSource="{Binding Photos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Padding="5"
+                            BackgroundColor="#E0F2FE"
+                            CornerRadius="15">
+                            <Image
+                                Margin="5"
+                                HeightRequest="100"
+                                Source="{Binding .}"
+                                WidthRequest="100" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button x:Name="AddImagesButton" Text="Add Images" Command="{Binding AddPhotoCommand}"/>
 
             <!--  Submit Button  -->
             <Button
@@ -56,7 +72,8 @@
                 Margin="0,20,0,0"
                 BackgroundColor="Goldenrod"
                 Text="Post Listing"
-                TextColor="White" />
+                TextColor="White" 
+                Command="{Binding UploadPostCommand}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

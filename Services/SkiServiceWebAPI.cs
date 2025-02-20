@@ -31,7 +31,7 @@ namespace SkiApp.Services
         private HttpClient client;
         private string baseUrl;
         public static string BaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
-        private static string ImageBaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
+        public static string ImageBaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
         #endregion
 
         public SkiServiceWebAPIProxy()
@@ -42,6 +42,51 @@ namespace SkiApp.Services
 
             this.client = new HttpClient(handler);
             this.baseUrl = BaseAddress;
+        }
+        public string GetImagesBaseAddress()
+        {
+            return SkiServiceWebAPIProxy.ImageBaseAddress;
+        }
+
+        public string GetDefaultProfilePhotoUrl()
+        {
+            return $"{SkiServiceWebAPIProxy.ImageBaseAddress}/profileImages/default.png";
+        }
+
+        public async Task<VisitorInfo?> UploadPostImage(string imagePath, int posterId)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}UploadPostImage?posterId={posterId}";
+            try
+            {
+                //Create the form data
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+                form.Add(fileContent, "file", imagePath);
+                //Call the server API
+                HttpResponseMessage response = await client.PostAsync(url, form);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    //Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+                    //Desrialize result
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<VisitorInfo?> LoginAsync(VisitorInfo userInfo)
@@ -250,6 +295,39 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<VisitorInfo?> GetUser(int Id)
+        {
+            string url = $"{this.baseUrl}getUser?Id={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         //This method call the UpdateUser web API on the server and return true if the call was successful
         //    or false if the call fails
@@ -257,6 +335,31 @@ namespace SkiApp.Services
         {
             //Set URI to the specific function API
             string url = $"{this.baseUrl}updateUser";
+            try
+            {
+                //Call the server API
+                string json = JsonSerializer.Serialize(user);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> UpdatePro(ProfessionalInfo user)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}updatePro";
             try
             {
                 //Call the server API

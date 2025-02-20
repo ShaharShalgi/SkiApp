@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace SkiApp.ViewModels
             Username2 = u.Username;
             Gender2 = u.Gender;
             Email2 = u.Email;
+            UserID = u.UserID;
            
             if (IsProfessional)
             {
@@ -45,6 +47,10 @@ namespace SkiApp.ViewModels
             UpdateRequest = false;
             EmailError = "Email is required";
             PasswordError = "Password must be at least 4 characters long and contain letters and numbers";
+            AddPhotoCommand = new Command(AddPhoto);
+            UploadPostCommand = new Command(UploadPost);
+            this.photos = new ObservableCollection<string>();
+
         }
         private bool isProfessional;
         public bool IsProfessional
@@ -86,6 +92,18 @@ namespace SkiApp.ViewModels
             }
         }
 
+        private int userID;
+
+        public int UserID
+        {
+            get => userID;
+            set
+            {
+                userID = value;
+              
+                OnPropertyChanged("UserID");
+            }
+        }
 
         private string username;
 
@@ -465,7 +483,104 @@ namespace SkiApp.ViewModels
            
 
         }
+        private ObservableCollection<string>? photos;
+        public ObservableCollection<string>? Photos
+        {
+            get { return photos; }
+            set { photos = value; OnPropertyChanged(); }
+        }
+        public ICommand AddPhotoCommand { get; set; }
+
+
+        private async void AddPhoto()
+        {
+            try
+            {
+                var result = await MediaPicker.Default.CapturePhotoAsync(new MediaPickerOptions
+                {
+                    Title = "Please select a photo",
+                });
+
+                if (result != null)
+                {
+                    // The user picked a file
+                    this.Photos.Add(result.FullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        public ICommand UploadPostCommand {  get; set; }
+        private async void UploadPost()
+        {
+
+            ProfessionalInfo theUser = await proxy.GetPro(UserID);
+            VisitorInfo u = await proxy.GetUser(UserID);
+            u.Username = Username;
+                theUser.Price = Price;
+                theUser.Loc = Loc;
+                theUser.Txt = Txt;
+              
+
+                InServerCall = true;
+            await proxy.UpdateUser(u);
+           bool success = await proxy.UpdatePro(theUser);
+            if (!success)
+            {
+
+                string errorMsg = "Post failed. Please try again.";
+                await Shell.Current.DisplayAlert("upload Post", errorMsg, "ok");
+                InServerCall = false;
+
+            }
+            else
+            {
+
+                VisitorInfo? t = await proxy.GetUser(UserID);
+
+                if (t != null)
+                {
+                    int fail = 0;
+                    foreach (string path in this.Photos)
+                    {
+                        t = await proxy.UploadPostImage(path, t.UserID);
+
+                        if (t == null) ++fail;
+                    }
+
+                    if (fail > 0)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", $"Post was uploaded but {fail} images fail to be uploaded", "ok");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Success!", "Post was added successfully", "ok");
+
+
+                    }
+                    ((App)Application.Current).MainPage.Navigation.PushAsync(serviceProvider.GetService<Profile>());
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Something went wrong, try again later!", "ok");
+                }
+
+
+
+                InServerCall = false;
+            }
+
+
+        }
+               
+            
+
+
+
+        }
 
     }
 
-    }
+    

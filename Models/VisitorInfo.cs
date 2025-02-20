@@ -14,6 +14,21 @@ namespace SkiApp.Models
         public string Email { get; set; } = null;
         public int UserID { get; set; } = 0;
         public bool IsPro {  get; set; }
-     
+        public VisitorInfo()
+        {
+            Photos = new List<PostPhotoInfo>();
+        }
+        public List<PostPhotoInfo> Photos { get; set; } = null;
+
+        public string PhotoURL
+        {
+            get
+            {
+                if (Photos != null && Photos.Count > 0)
+                    return Photos[0].FullURL;
+                return "";
+            }
+        }
+
     }
 }
