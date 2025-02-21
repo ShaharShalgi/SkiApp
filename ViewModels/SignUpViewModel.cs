@@ -282,8 +282,9 @@ public class SignUpViewModel : ViewModelBase
                     Price = this.Price,
                     UserId = newUser.UserID,
                     Txt = this.Txt,
-                    Rating = 0,
-                    RaterNum = 0
+                    Rating = 0, 
+                    RaterNum = 0,
+                    Post = false
                 };
                 InServerCall = true;
                 newPro = await proxy.SignUpPro(newPro);

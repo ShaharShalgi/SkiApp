@@ -80,6 +80,7 @@ namespace SkiApp.ViewModels
             Loc = p.Loc;
             Price = p.Price;
             Txt = p.Txt;
+            Post = p.Post;
             Rating = p.Rating;
             TypeId = p.TypeId;
             if (TypeId == 1)
@@ -431,6 +432,16 @@ namespace SkiApp.ViewModels
                 OnPropertyChanged("Type");
             }
         }
+        private bool? post;
+        public bool? Post
+        {
+            get => post;
+            set
+            {
+                post = value;
+                OnPropertyChanged("Post");
+            }
+        }
 
         public ICommand UpgradeProCommand { get; }
         public ICommand OnUpgradeCommand { get; }
@@ -464,7 +475,8 @@ namespace SkiApp.ViewModels
                     UserId = theUser.UserID,
                     Txt = this.Txt,
                     Rating = 0,
-                    RaterNum = 0
+                    RaterNum = 0,
+                    Post = false
                 };
                 InServerCall = true;
                 newPro = await proxy.SignUpPro(newPro);
@@ -521,6 +533,7 @@ namespace SkiApp.ViewModels
                 theUser.Price = Price;
                 theUser.Loc = Loc;
                 theUser.Txt = Txt;
+                theUser.Post = true;
               
 
                 InServerCall = true;
@@ -551,7 +564,7 @@ namespace SkiApp.ViewModels
 
                     if (fail > 0)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Error", $"Post was uploaded but {fail} images fail to be uploaded", "ok");
+                        await Application.Current.MainPage.DisplayAlert("Error", $"Post was uploaded but {fail} images failed to be uploaded", "ok");
                     }
                     else
                     {
@@ -574,6 +587,7 @@ namespace SkiApp.ViewModels
 
 
         }
+        
                
             
 
