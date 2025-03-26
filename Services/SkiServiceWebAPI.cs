@@ -27,11 +27,11 @@ namespace SkiApp.Services
 
         #region with tunnel
         //Define the serevr IP address! (should be realIP address if you are using a device that is not running on the same machine as the server)
-        private static string serverIP = "ds7c1nx3-7171.euw.devtunnels.ms";
+        private static string serverIP = "dk6cnq0r-7171.euw.devtunnels.ms";
         private HttpClient client;
         private string baseUrl;
-        public static string BaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
-        public static string ImageBaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
+        public static string BaseAddress = "https://dk6cnq0r-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
+        public static string ImageBaseAddress = "https://dk6cnq0r-7171.euw.devtunnels.ms/";
         #endregion
 
         public SkiServiceWebAPIProxy()
