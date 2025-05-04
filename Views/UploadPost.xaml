@@ -43,25 +43,83 @@
                 HeightRequest="100"
                 Text="{Binding Txt}" />
 
+            <Label FontSize="Medium" Text="Existing Images" />
+            <HorizontalStackLayout  Spacing="10" />
+            <CollectionView HeightRequest="120" ItemsSource="{Binding UploadedPhotos}">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                        <Label Text="No Uploaded Images" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+    HorizontalOptions="Center" Margin="0,20,0,0"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
 
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <Grid RowDefinitions="3*,*">
+
+                            <Frame
+                 Padding="5"
+                 BackgroundColor="#E0F2FE"
+                 CornerRadius="15" Grid.Row="0">
+                                <Image
+                     Margin="5"
+                     HeightRequest="100"
+                     Source="{Binding .}"
+                     WidthRequest="100" />
+
+                            </Frame>
+
+                            <!--<Button Grid.Row="1" BackgroundColor="LightSteelBlue" Text="Delete Image" WidthRequest="200" TextColor="Black"/>-->
+                        </Grid>
+                    </DataTemplate>
+
+
+
+
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
 
             <!--  Images  -->
             <Label FontSize="Medium" Text="Images" />
             <HorizontalStackLayout x:Name="ImagePreviewStack" Spacing="10" />
             <CollectionView HeightRequest="120" ItemsSource="{Binding Photos}">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                        <Label Text="Add Images" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+               HorizontalOptions="Center" Margin="0,20,0,0"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                
                 <CollectionView.ItemTemplate>
+                   
                     <DataTemplate>
+                        <Grid RowDefinitions="3*,*">
+                        
                         <Frame
                             Padding="5"
                             BackgroundColor="#E0F2FE"
-                            CornerRadius="15">
+                            CornerRadius="15" Grid.Row="0">
                             <Image
                                 Margin="5"
                                 HeightRequest="100"
                                 Source="{Binding .}"
                                 WidthRequest="100" />
+                            
                         </Frame>
+
+                            <!--<Button Grid.Row="1" BackgroundColor="LightSteelBlue" Text="Delete Image" WidthRequest="200" TextColor="Black"/>-->
+                        </Grid>
                     </DataTemplate>
+                    
+
+
+
+
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button x:Name="AddImagesButton" Text="Add Images" Command="{Binding AddPhotoCommand}"/>

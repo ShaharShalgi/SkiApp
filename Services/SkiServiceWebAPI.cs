@@ -27,11 +27,11 @@ namespace SkiApp.Services
 
         #region with tunnel
         //Define the serevr IP address! (should be realIP address if you are using a device that is not running on the same machine as the server)
-        private static string serverIP = "ds7c1nx3-7171.euw.devtunnels.ms";
+        private static string serverIP = "mxw3x8zq-7171.euw.devtunnels.ms";
         private HttpClient client;
         private string baseUrl;
-        public static string BaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
-        public static string ImageBaseAddress = "https://ds7c1nx3-7171.euw.devtunnels.ms/";
+        public static string BaseAddress = "https://mxw3x8zq-7171.euw.devtunnels.ms/api/SkiAppServerAPI/";
+        public static string ImageBaseAddress = "https://mxw3x8zq-7171.euw.devtunnels.ms/";
         #endregion
 
         public SkiServiceWebAPIProxy()
@@ -213,6 +213,138 @@ namespace SkiApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     List<TipInfo> result = JsonSerializer.Deserialize<List<TipInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<VisitorInfo>> GetAllUsers()
+        {
+            string url = $"{this.baseUrl}getAllUsers";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<VisitorInfo> result = JsonSerializer.Deserialize<List<VisitorInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<PostPhotoInfo>> GetAllPostPhotos()
+        {
+            string url = $"{this.baseUrl}getAllPostPhotos";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<PostPhotoInfo> result = JsonSerializer.Deserialize<List<PostPhotoInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<String>> GetPostPhotos(int Id)
+        {
+            string url = $"{this.baseUrl}GetPostImages?posterId={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<String> result = JsonSerializer.Deserialize<List<String>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<ProfessionalInfo>> GetCoaches()
+        {
+            string url = $"{this.baseUrl}getCoaches";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
 
                     return result;
                 }

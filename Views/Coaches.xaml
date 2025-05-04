@@ -2,11 +2,214 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiApp.Views.Coaches"
-             Title="Coaches">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Coaches"
+                 xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+                 xmlns:Models="clr-namespace:SkiApp.Models"
+             x:DataType="ViewModels:CoachesViewModel"
+             BackgroundColor="{AppThemeBinding Light=#F2F7FF, Dark=#121A2B}">
+    <!-- Simple header -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Card styles for posts -->
+            <Style x:Key="PostCardStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="16" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="16,12,16,20" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1E2740}" />
+            </Style>
+
+            <!-- Typography styles -->
+            <Style x:Key="PostTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#1A2944, Dark=#E9ECFF}" />
+                <Setter Property="Margin" Value="0,0,0,4" />
+            </Style>
+
+            <Style x:Key="LocationStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="OpenSans" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" />
+            </Style>
+
+            <Style x:Key="InfoStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontFamily" Value="OpenSans" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#3A4A6B, Dark=#C5D0E6}" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+                <Setter Property="MaxLines" Value="3" />
+                <Setter Property="LineHeight" Value="1.4" />
+            </Style>
+
+            <Style x:Key="RatingStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#FF9D42, Dark=#FFB76B}" />
+            </Style>
+
+            <!-- Interaction Button Style -->
+            <Style x:Key="InteractionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#5271FF, Dark=#7B97FF}"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="OpenSansSemibold"/>
+                <Setter Property="Padding" Value="12,6"/>
+                <Setter Property="BorderWidth" Value="0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header Bar -->
+        <Grid Grid.Row="0" Padding="20,16" BackgroundColor="{AppThemeBinding Light=White, Dark=#1E2740}">
+            <Label Text="Discover" FontSize="28" FontFamily="OpenSansBold" 
+                   TextColor="{AppThemeBinding Light=#1A2944, Dark=#E9ECFF}" 
+                   HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Main Feed Content -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding PostCol}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                    <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                    <Label Text="No posts to display" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+                           HorizontalOptions="Center" Margin="0,20,0,0"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Models:ProfessionalInfo">
+                    <Grid Padding="0">
+                        <Frame Style="{StaticResource PostCardStyle}">
+                            <!-- Make the entire post clickable -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PostSelectedCommand}"
+                                                      CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                                <!-- Header with profile pic, name, rating -->
+                                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16">
+                                    <!--<Frame CornerRadius="22" IsClippedToBounds="True" 
+                                           HeightRequest="44" WidthRequest="44" 
+                                           Padding="0" BorderColor="Transparent"
+                                           BackgroundColor="{AppThemeBinding Light=#F0F4FF, Dark=#2D3A5C}">
+                                        <Image Source="{Binding ProfileImage}" Aspect="AspectFill" />
+                                    </Frame>-->
+
+                                    <StackLayout Grid.Column="1" Spacing="2" Margin="12,0,0,0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource PostTitleStyle}" />
+                                        <Label Style="{StaticResource LocationStyle}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Price} " />
+                                                    <Span Text="$ Per Hour" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                       
+                                        <Label Style="{StaticResource LocationStyle}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="📍 " />
+                                                    <Span Text="{Binding Loc}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Label FontSize="Medium" Text="Images" />
+                                        <HorizontalStackLayout x:Name="ImagePreviewStack" Spacing="10" />
+                                        <CollectionView HeightRequest="120" ItemsSource="{Binding PhotoPaths}">
+                                            <CollectionView.EmptyView>
+                                                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                                                    <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                                                    <Label Text="No Images Available" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+HorizontalOptions="Center" Margin="0,20,0,0"/>
+                                                </StackLayout>
+                                            </CollectionView.EmptyView>
+
+                                            <CollectionView.ItemTemplate>
+
+                                                <DataTemplate>
+                                                    <Grid RowDefinitions="3*,*">
+
+                                                        <Frame
+             Padding="5"
+             BackgroundColor="#E0F2FE"
+             CornerRadius="15" Grid.Row="0">
+                                                            <Image
+                 Margin="5"
+                 HeightRequest="100"
+                 Source="{Binding .}"
+                 WidthRequest="100" />
+
+                                                        </Frame>
+
+                                                        <!--<Button Grid.Row="1" BackgroundColor="LightSteelBlue" Text="Delete Image" WidthRequest="200" TextColor="Black"/>-->
+                                                    </Grid>
+                                                </DataTemplate>
+
+
+
+
+
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </StackLayout>
+                                   
+                                    <Label Grid.Column="2" Style="{StaticResource RatingStyle}" FontSize="Large">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="⭐ " />
+                                                <Span Text="{Binding Rating}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    
+                                </Grid>
+
+                                <!-- Main Image(s) -->
+                                <!--<Frame Grid.Row="1" Padding="0" CornerRadius="0" IsClippedToBounds="True" 
+                                       HasShadow="False" BorderColor="Transparent">
+                                    <CarouselView ItemsSource="{Binding Photos}" 
+                                                  HeightRequest="280" 
+                                                  IndicatorView="indicatorView"
+                                                  Loop="False">
+                                        <CarouselView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding}" Aspect="AspectFill" />
+                                            </DataTemplate>
+                                        </CarouselView.ItemTemplate>
+                                    </CarouselView>
+                                </Frame>-->
+
+                                <IndicatorView Grid.Row="1" x:Name="indicatorView" 
+                                              HorizontalOptions="Center" VerticalOptions="End"
+                                              Margin="0,0,0,8"
+                                              IndicatorSize="8"
+                                              IndicatorColor="{AppThemeBinding Light=#D0D9E8, Dark=#38425F}"
+                                              SelectedIndicatorColor="{AppThemeBinding Light=#5271FF, Dark=#7B97FF}"/>
+
+                                <!-- Content -->
+                                <Border Grid.Row="2" Padding="16,14" StrokeThickness="0">
+                                    <Label Text="{Binding Txt}" Style="{StaticResource InfoStyle}" />
+                                </Border>
+
+                                <!-- Interaction buttons with nicer layout -->
+                                <Grid Grid.Row="3" ColumnDefinitions="*,*,*" Padding="8,4,8,14">
+                             
+
+                                    <Button Grid.Column="1" Text="💬 See Reviews" 
+                                            Style="{StaticResource InteractionButtonStyle}" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

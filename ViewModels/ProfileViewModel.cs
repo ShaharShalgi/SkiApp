@@ -43,6 +43,7 @@ namespace SkiApp.ViewModels
             UpgradeProCommand = new Command(Upgrade);
             OnUpgradeCommand = new Command(OnUpgrade);
             OnPostCommand = new Command(OnPost);
+            DeletePostCommand = new Command(OnDelete);
             NameError = "Name is required";
             UpdateRequest = false;
             EmailError = "Email is required";
@@ -50,7 +51,35 @@ namespace SkiApp.ViewModels
             AddPhotoCommand = new Command(AddPhoto);
             UploadPostCommand = new Command(UploadPost);
             this.photos = new ObservableCollection<string>();
+            this.uploadedPhotos = new ObservableCollection<string>();
+            GetPhotos();
+            
+        }
 
+
+        private bool showPost;
+        public bool ShowPost
+        {
+            get { return showPost; }
+            set
+            {
+                showPost = value;
+                OnPropertyChanged();
+                ((Command)DeletePostCommand).ChangeCanExecute();
+
+            }
+        }
+        private bool showEdit;
+        public bool ShowEdit
+        {
+            get { return showEdit; }
+            set
+            {
+                showEdit = value;
+                OnPropertyChanged();
+                ((Command)DeletePostCommand).ChangeCanExecute();
+
+            }
         }
         private bool isProfessional;
         public bool IsProfessional
@@ -83,6 +112,15 @@ namespace SkiApp.ViewModels
             Post = p.Post;
             Rating = p.Rating;
             TypeId = p.TypeId;
+            if(isProfessional == true && Post == false)
+            {
+                ShowPost = true;
+            }
+            else
+            {
+                ShowPost = false;
+            }
+            ShowEdit = !ShowPost;
             if (TypeId == 1)
             {
                 Type = "Coach";
@@ -446,6 +484,19 @@ namespace SkiApp.ViewModels
         public ICommand UpgradeProCommand { get; }
         public ICommand OnUpgradeCommand { get; }
         public ICommand OnPostCommand { get; }
+        public ICommand DeletePostCommand { get; }
+        private async void OnDelete()
+        {
+            ProfessionalInfo theUser = await proxy.GetPro(UserID);
+            theUser.Post = false;
+
+
+            InServerCall = true;
+
+           await proxy.UpdatePro(theUser);
+            ShowPost = !ShowPost;
+            ShowEdit = !ShowEdit;
+        }
 
         private void OnPost()
         {
@@ -501,6 +552,12 @@ namespace SkiApp.ViewModels
             get { return photos; }
             set { photos = value; OnPropertyChanged(); }
         }
+        private ObservableCollection<string>? uploadedPhotos;
+        public ObservableCollection<string>? UploadedPhotos
+        {
+            get { return uploadedPhotos; }
+            set { photos = value; OnPropertyChanged(); }
+        }
         public ICommand AddPhotoCommand { get; set; }
 
 
@@ -521,6 +578,19 @@ namespace SkiApp.ViewModels
             }
             catch (Exception ex)
             {
+            }
+        }
+        public async void GetPhotos()
+        {
+            List<string> Paths = new List<String>();
+            Paths = await this.proxy.GetPostPhotos(UserID);
+            if (Paths != null)
+            {
+                foreach (string p in Paths)
+                {
+                    this.uploadedPhotos.Add(SkiServiceWebAPIProxy.ImageBaseAddress + p);
+                }
+               
             }
         }
         public ICommand UploadPostCommand {  get; set; }

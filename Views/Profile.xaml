@@ -197,9 +197,29 @@
                         FontAttributes="Bold"
                         FontSize="16"
                         HeightRequest="50"
-                        IsVisible="{Binding IsProfessional}"
+                        IsVisible="{Binding ShowPost}"
                         Text="Upload Post"
                         TextColor="#1a1a1a" />
+                    <Button
+                        BackgroundColor="Goldenrod"
+                         Command="{Binding OnPostCommand}"
+                         CornerRadius="10"
+                         FontAttributes="Bold"
+                         FontSize="16"
+                         HeightRequest="50"
+                         IsVisible="{Binding ShowEdit}"
+                         Text="Edit Post"
+                         TextColor="#1a1a1a" />
+                    <Button
+                        BackgroundColor="Red"
+                         Command="{Binding DeletePostCommand}"
+                         CornerRadius="10"
+                         FontAttributes="Bold"
+                         FontSize="16"
+                         HeightRequest="50"
+                         IsVisible="{Binding ShowEdit}"
+                         Text="Delete Post"
+                         TextColor="#1a1a1a" /> 
                     <VerticalStackLayout
                         x:Name="ProfessionalFields"
                         IsEnabled="{Binding NotInServerCall}"

@@ -1,9 +1,14 @@
+
+using SkiApp.ViewModels;
+
 namespace SkiApp.Views;
 
 public partial class Coaches : ContentPage
 {
-	public Coaches()
+	public Coaches(CoachesViewModel vm)
 	{
-		InitializeComponent();
+        this.BindingContext = vm;
+        InitializeComponent();
+        
 	}
 }

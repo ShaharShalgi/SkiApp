@@ -19,7 +19,7 @@ namespace SkiApp.Models
                 return SkiServiceWebAPIProxy.ImageBaseAddress + PhotoUrlPath;
             }
         }
-
+        
 
         public PostPhotoInfo() { }
     }
