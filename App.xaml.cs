@@ -2,7 +2,7 @@
 using SkiApp.ViewModels;
 using SkiApp.Views;
 using SkiApp.Services;
-using Windows.System;
+//using Windows.System;
 namespace SkiApp
 {
     public partial class App : Application
@@ -11,6 +11,13 @@ namespace SkiApp
         public VisitorInfo? LoggedInUser { get; set; }
         public List<VisitorInfo> Visitors = new List<VisitorInfo>();
         public List<PostPhotoInfo> PostPhotos = new List<PostPhotoInfo>();
+        public async void GetPostPhotoPath()
+        {
+            foreach(PostPhotoInfo p in PostPhotos)
+            {
+                p.PhotoUrlPath = await this.proxy.GetPathByPhotoID(p.PhotoId);
+            }
+        }
 
         private SkiServiceWebAPIProxy proxy;
         public App(IServiceProvider serviceProvider, SkiServiceWebAPIProxy proxy)
@@ -28,6 +35,7 @@ namespace SkiApp
             //this gets the data of the statuses and food types
             Visitors = await this.proxy.GetAllUsers();
             PostPhotos = await this.proxy.GetAllPostPhotos();
+            GetPostPhotoPath();
            
         }
     }

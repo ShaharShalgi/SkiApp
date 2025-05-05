@@ -460,6 +460,39 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<string> GetPathByPhotoID(int Id)
+        {
+            string url = $"{this.baseUrl}GetPostPath?photoID={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    //JsonSerializerOptions options = new JsonSerializerOptions
+                    //{
+                    //    PropertyNameCaseInsensitive = true
+                    //};
+                    //string result = JsonSerializer.Deserialize<string>(resContent, options);
+
+                    return resContent;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         //This method call the UpdateUser web API on the server and return true if the call was successful
         //    or false if the call fails

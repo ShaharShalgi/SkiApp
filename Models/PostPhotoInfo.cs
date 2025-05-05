@@ -16,7 +16,7 @@ namespace SkiApp.Models
         {
             get
             {
-                return SkiServiceWebAPIProxy.ImageBaseAddress + PhotoUrlPath;
+                return SkiServiceWebAPIProxy.ImageBaseAddress + "/posts/" + PhotoUrlPath;
             }
         }
         
