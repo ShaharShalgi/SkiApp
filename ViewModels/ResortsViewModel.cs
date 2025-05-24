@@ -11,9 +11,9 @@ using SkiApp.Views;
 
 namespace SkiApp.ViewModels
 {
-    public class CoachesViewModel : ViewModelBase
+    public class ResortsViewModel : ViewModelBase
     {
-      
+        
         private SkiServiceWebAPIProxy proxy;
         private IServiceProvider serviceProvider;
         //public ICommand SortTipsCommand { get; }
@@ -24,7 +24,7 @@ namespace SkiApp.ViewModels
             get => postCol;
             set { postCol = value; OnPropertyChanged(); }
         }
-        public async Task GetAllCoaches()
+        public async Task GetAllResorts()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace SkiApp.ViewModels
                     await app.RefreshAppData();
                 }
 
-                List<ProfessionalInfo> posts = await this.proxy.GetCoaches();
+                List<ProfessionalInfo> posts = await this.proxy.GetResorts();
                 if (posts != null)
                     PostCol = new ObservableCollection<ProfessionalInfo>(posts);
 
@@ -47,7 +47,6 @@ namespace SkiApp.ViewModels
                 Console.WriteLine($"Error getting coaches: {ex.Message}");
             }
         }
-
         private int priceRange;
         public int PriceRange
         {
@@ -73,7 +72,7 @@ namespace SkiApp.ViewModels
                 bool priceAscending = priceRange != 0;
                 bool ratingAscending = ratingRange != 0;
 
-                List<ProfessionalInfo> posts2 = await this.proxy.SortCoaches(priceAscending, ratingAscending);
+                List<ProfessionalInfo> posts2 = await this.proxy.SortResorts(priceAscending, ratingAscending);
 
                 if (posts2 != null)
                     PostCol = new ObservableCollection<ProfessionalInfo>(posts2);
@@ -81,13 +80,13 @@ namespace SkiApp.ViewModels
             catch (Exception ex)
             {
                 // Handle or log the exception
-                Console.WriteLine($"Error sorting coaches: {ex.Message}");
+                Console.WriteLine($"Error sorting Resorts: {ex.Message}");
             }
         }
         public ICommand SortCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
-
         public ICommand ViewReviewsCommand { get; }
+
         private async Task NavigateToReviews(ProfessionalInfo professional)
         {
             if (professional == null)
@@ -103,15 +102,15 @@ namespace SkiApp.ViewModels
                 await Shell.Current.Navigation.PushAsync(reviewsPage);
             }
         }
-        public CoachesViewModel(SkiServiceWebAPIProxy proxy, IServiceProvider serviceProvider)
+        public ResortsViewModel(SkiServiceWebAPIProxy proxy, IServiceProvider serviceProvider)
         {
             this.proxy = proxy;
             this.serviceProvider = serviceProvider;
             PostCol = new ObservableCollection<ProfessionalInfo>();
             SortCommand = new Command(() => { _ = Sort(); });
-            RefreshCommand = new Command(() => { _ = GetAllCoaches(); });
+            RefreshCommand = new Command(() => { _ = GetAllResorts(); });
             ViewReviewsCommand = new Command<ProfessionalInfo>(async (professional) => await NavigateToReviews(professional));
-            _ = GetAllCoaches();
+            _ = GetAllResorts();
 
 
 

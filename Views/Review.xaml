@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiApp.Views.Review"
+             Title="Review"
+             xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+             xmlns:Models="clr-namespace:SkiApp.Models"
+             x:DataType="ViewModels:ReviewViewModel"
+             BackgroundColor="{AppThemeBinding Light=#F2F7FF, Dark=#121A2B}">
+    
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <!-- Card styles for reviews -->
+                <Style x:Key="ReviewCardStyle" TargetType="Frame">
+                    <Setter Property="CornerRadius" Value="12" />
+                    <Setter Property="HasShadow" Value="True" />
+                    <Setter Property="Padding" Value="16" />
+                    <Setter Property="Margin" Value="16,8" />
+                    <Setter Property="BorderColor" Value="Transparent" />
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1E2740}" />
+                </Style>
+
+                <!-- Typography styles -->
+                <Style x:Key="ReviewerNameStyle" TargetType="Label">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light=#1A2944, Dark=#E9ECFF}" />
+                </Style>
+
+                <Style x:Key="DateStyle" TargetType="Label">
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontFamily" Value="OpenSans" />
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" />
+                </Style>
+
+                <Style x:Key="CommentStyle" TargetType="Label">
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontFamily" Value="OpenSans" />
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light=#3A4A6B, Dark=#C5D0E6}" />
+                    <Setter Property="LineHeight" Value="1.4" />
+                    <Setter Property="Margin" Value="0,8,0,0" />
+                </Style>
+
+                <Style x:Key="RatingStyle" TargetType="Label">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light=#FF9D42, Dark=#FFB76B}" />
+                </Style>
+            </ResourceDictionary>
+        </ContentPage.Resources>
+    <ScrollView>
+       
+    
+            <Grid RowDefinitions="Auto,*, *">
+            <!-- Coach info header -->
+ 
+            <Frame Grid.Row="0" Padding="16" Margin="16,16,16,0"
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E2740}"
+               BorderColor="Transparent"
+               CornerRadius="16"
+               HasShadow="True">
+     
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="{Binding Pro.Name}" FontSize="22" FontFamily="OpenSansBold"
+                           TextColor="{AppThemeBinding Light=#1A2944, Dark=#E9ECFF}" />
+
+                        <Label FontSize="16" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="📍 " />
+                                    <Span Text="{Binding Pro.Loc}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label FontSize="16" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Price: " />
+                                    <Span Text="{Binding Pro.Price}" />
+                                    <Span Text=" $ Per Hour" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+
+                    <Label Grid.Column="1" Style="{StaticResource RatingStyle}" FontSize="20">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="⭐ " />
+                                <Span Text="{Binding Pro.Rating}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+            </Frame>
+            <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*,*">
+                <Frame Grid.Row="0" Padding="16" Margin="16,16,16,0" Grid.Column="0" >
+            <Button
+BackgroundColor="DarkCyan"
+ Command="{Binding OnReviewCommand}"
+ CornerRadius="10"
+ FontAttributes="Bold"
+ FontSize="16"
+ HeightRequest="50"
+ Text="Add Review"
+ TextColor="#1a1a1a"
+                
+/>
+                </Frame>
+            <Frame Grid.Row="0" Padding="16" Margin="16,16,16,0" Grid.Column="1">
+                <Button
+BackgroundColor="DarkCyan"
+ Command="{Binding ReturnCommand}"
+ CornerRadius="10"
+ FontAttributes="Bold"
+ FontSize="16"
+ HeightRequest="50"
+ Text="Return"
+ TextColor="#1a1a1a"
+                
+/>
+            
+            </Frame>
+            </Grid>
+            <!-- Reviews list -->
+            <RefreshView Grid.Row="2" Command="{Binding RefreshCommand}" IsRefreshing="{Binding InServerCall}">
+                <CollectionView ItemsSource="{Binding ReviewCol}" Margin="0,16,0,0">
+                    <CollectionView.EmptyView>
+                        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="20">
+                            <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                            <Label Text="No reviews yet" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+                               HorizontalOptions="Center" Margin="0,20,0,0"/>
+                            <Label Text="Be the first to leave a review!" FontSize="14" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+                               HorizontalOptions="Center" Margin="0,8,0,0"/>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="Models:ReviewInfo">
+                                <Frame Style="{StaticResource ReviewCardStyle}">
+                                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                    <!-- Reviewer name and date -->
+                                    <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="{Binding ReviewerName}" 
+                                       Style="{StaticResource ReviewerNameStyle}" />
+                                        <Label Grid.Row="1" Grid.Column="0" 
+                                            Text="{Binding Title}" 
+                                            Style="{StaticResource ReviewerNameStyle}" />
+
+                                        <Label Grid.Row="0" Grid.Column="1" 
+                                       Style="{StaticResource RatingStyle}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="⭐ " />
+                                                <Span Text="{Binding Rating}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                        <CollectionView HeightRequest="120" ItemsSource="{Binding PhotoPaths}">
+                                            <CollectionView.EmptyView>
+                                                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                                                    <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                                                    <Label Text="No Images Available" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+                                                            HorizontalOptions="Center" Margin="0,20,0,0"/>
+                                                </StackLayout>
+                                            </CollectionView.EmptyView>
+
+                                            <CollectionView.ItemTemplate>
+
+                                                <DataTemplate>
+                                                    <Grid RowDefinitions="3*,*">
+
+                                                        <Frame
+                                                            Padding="5"
+                                                            BackgroundColor="#E0F2FE"
+                                                            CornerRadius="15" Grid.Row="0">
+                                                            <Image
+                                                                 Margin="5"
+                                                                 HeightRequest="100"
+                                                                 Source="{Binding .}"
+                                                                 WidthRequest="100" />
+
+                                                        </Frame>
+
+                                                        <!--<Button Grid.Row="1" BackgroundColor="LightSteelBlue" Text="Delete Image" WidthRequest="200" TextColor="Black"/>-->
+                                                    </Grid>
+                                                </DataTemplate>
+
+
+
+
+
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                        <Border Grid.Row="2" Padding="16,14" StrokeThickness="0">
+                                            <Label Text="{Binding Txt}" Style="{StaticResource InfoStyle}" />
+                                        </Border>
+
+
+                                    </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+        
+    </ScrollView>
+</ContentPage>

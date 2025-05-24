@@ -48,18 +48,19 @@ namespace SkiApp.Models
                 List<PostPhotoInfo> postphotos = ((App)Application.Current).PostPhotos;
                 postphotos = postphotos.Where(s => s.UserID == this.UserId).ToList();
                 List<string> paths = new List<string>();
-                
+
                 if (postphotos != null)
                 {
-                    foreach(PostPhotoInfo p in postphotos)
+                    foreach (PostPhotoInfo p in postphotos)
                     {
                         paths.Add(p.FullURL);
                     }
                 }
-                    return paths;
+                return paths;
                 return null;
             }
         }
+
 
 
     }

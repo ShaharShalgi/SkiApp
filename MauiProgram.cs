@@ -28,6 +28,7 @@ namespace SkiApp
             builder.Services.AddTransient<Tips>();
             builder.Services.AddTransient<TipsViewModel>();
             builder.Services.AddTransient<Resorts>();
+            builder.Services.AddTransient<ResortsViewModel>();
             builder.Services.AddTransient<Coaches>();
             builder.Services.AddTransient<CoachesViewModel>();
             builder.Services.AddTransient<Profile>();
@@ -36,6 +37,9 @@ namespace SkiApp
             builder.Services.AddTransient<HomepageViewModel>();
             builder.Services.AddTransient<UpgradePro>();
             builder.Services.AddTransient<UploadPost>();
+            builder.Services.AddTransient<Review>();
+            builder.Services.AddTransient<UploadReview>();
+            builder.Services.AddTransient<ReviewViewModel>();
             builder.Services.AddSingleton<SkiServiceWebAPIProxy>();
 
 

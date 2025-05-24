@@ -48,10 +48,7 @@ namespace SkiApp.Services
             return SkiServiceWebAPIProxy.ImageBaseAddress;
         }
 
-        public string GetDefaultProfilePhotoUrl()
-        {
-            return $"{SkiServiceWebAPIProxy.ImageBaseAddress}/profileImages/default.png";
-        }
+        
 
         public async Task<VisitorInfo?> UploadPostImage(string imagePath, int posterId)
         {
@@ -76,6 +73,41 @@ namespace SkiApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     VisitorInfo? result = JsonSerializer.Deserialize<VisitorInfo>(resContent, options);
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<ReviewInfo?> UploadReviewImage(string imagePath, int reviewId)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}UploadReviewImage?reviewId={reviewId}";
+            try
+            {
+                //Create the form data
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+                form.Add(fileContent, "file", imagePath);
+                //Call the server API
+                HttpResponseMessage response = await client.PostAsync(url, form);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    //Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+                    //Desrialize result
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    ReviewInfo? result = JsonSerializer.Deserialize<ReviewInfo>(resContent, options);
                     return result;
                 }
                 else
@@ -259,6 +291,38 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<ReviewInfo?> UploadReview(ReviewInfo review)
+        {
+            //Set URI to the specific function API
+            string url = $"{this.baseUrl}UploadReview";
+            try
+            {
+                //Call the server API
+                string json = JsonSerializer.Serialize(review);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+                //Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    //Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+                    //Desrialize result
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    ReviewInfo? result = JsonSerializer.Deserialize<ReviewInfo>(resContent, options);
+                    return result;
+                }
+                else
+                    return null;
+            }
+
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public async Task<List<PostPhotoInfo>> GetAllPostPhotos()
         {
             string url = $"{this.baseUrl}getAllPostPhotos";
@@ -292,9 +356,75 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<List<ReviewPhotoInfo>> GetAllReviewPhotos()
+        {
+            string url = $"{this.baseUrl}getAllReviewPhotos";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ReviewPhotoInfo> result = JsonSerializer.Deserialize<List<ReviewPhotoInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public async Task<List<String>> GetPostPhotos(int Id)
         {
             string url = $"{this.baseUrl}GetPostImages?posterId={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<String> result = JsonSerializer.Deserialize<List<String>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<String>> GetReviewPhotos(int Id)
+        {
+            string url = $"{this.baseUrl}GetReviewImages?reviewId={Id}";
             try
             {
                 // Call the server API
@@ -358,7 +488,105 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<List<ProfessionalInfo>> GetResorts()
+        {
+            string url = $"{this.baseUrl}getResorts";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
 
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<ReviewInfo>> GetReviewsByPro(int Id)
+        {
+            string url = $"{this.baseUrl}getReviewsByProID?Id={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ReviewInfo> result = JsonSerializer.Deserialize<List<ReviewInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<ReviewInfo> GetReviewByID(int Id)
+        {
+            string url = $"{this.baseUrl}getReviewByID?Id={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    ReviewInfo? result = JsonSerializer.Deserialize<ReviewInfo>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         public async Task<List<TipInfo>> SortTips(int diff)
         {
@@ -393,7 +621,171 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<List<ProfessionalInfo>> SortCoaches(bool priceAscending, bool ratingAscending)
+        {
+            string url = $"{this.baseUrl}sortCoachesByPriceAndRating?priceAscending={priceAscending}&ratingAscending={ratingAscending}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
 
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<ProfessionalInfo>> SortResorts(bool priceAscending, bool ratingAscending)
+        {
+            string url = $"{this.baseUrl}sortResortsByPriceAndRating?priceAscending={priceAscending}&ratingAscending={ratingAscending}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        //public async Task<List<ProfessionalInfo>> SortPricesByDESCCoach()
+        //{
+        //    string url = $"{this.baseUrl}sortPricesCoachDESC";
+        //    try
+        //    {
+        //        // Call the server API
+        //        HttpResponseMessage response = await client.GetAsync(url);
+
+        //        // Check status
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            // Extract the content as string
+        //            string resContent = await response.Content.ReadAsStringAsync();
+
+        //            // Deserialize result to List
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+        //            return result;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+        //public async Task<List<ProfessionalInfo>> SortRatingByDESCCoach()
+        //{
+        //    string url = $"{this.baseUrl}sortRatingsCoachDESC";
+        //    try
+        //    {
+        //        // Call the server API
+        //        HttpResponseMessage response = await client.GetAsync(url);
+
+        //        // Check status
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            // Extract the content as string
+        //            string resContent = await response.Content.ReadAsStringAsync();
+
+        //            // Deserialize result to List
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+        //            return result;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+        //public async Task<List<ProfessionalInfo>> SortRatingsByASCCoach()
+        //{
+        //    string url = $"{this.baseUrl}sortRatingsCoachASC";
+        //    try
+        //    {
+        //        // Call the server API
+        //        HttpResponseMessage response = await client.GetAsync(url);
+
+        //        // Check status
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            // Extract the content as string
+        //            string resContent = await response.Content.ReadAsStringAsync();
+
+        //            // Deserialize result to List
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            List<ProfessionalInfo> result = JsonSerializer.Deserialize<List<ProfessionalInfo>>(resContent, options);
+
+        //            return result;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
         public async Task<ProfessionalInfo?> GetPro(int Id)
         {
             string url = $"{this.baseUrl}getPro?Id={Id}";
@@ -493,7 +885,39 @@ namespace SkiApp.Services
                 return null;
             }
         }
+        public async Task<string> GetReviewPathByPhotoID(int Id)
+        {
+            string url = $"{this.baseUrl}GetReviewPath?photoID={Id}";
+            try
+            {
+                // Call the server API
+                HttpResponseMessage response = await client.GetAsync(url);
 
+                // Check status
+                if (response.IsSuccessStatusCode)
+                {
+                    // Extract the content as string
+                    string resContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize result to List
+                    //JsonSerializerOptions options = new JsonSerializerOptions
+                    //{
+                    //    PropertyNameCaseInsensitive = true
+                    //};
+                    //string result = JsonSerializer.Deserialize<string>(resContent, options);
+
+                    return resContent;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         //This method call the UpdateUser web API on the server and return true if the call was successful
         //    or false if the call fails
         public async Task<bool> UpdateUser(VisitorInfo user)

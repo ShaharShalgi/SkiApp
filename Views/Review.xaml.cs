@@ -1,9 +1,9 @@
 using SkiApp.ViewModels;
 namespace SkiApp.Views;
 
-public partial class Resorts : ContentPage
+public partial class Review : ContentPage
 {
-	public Resorts(ResortsViewModel vm)
+	public Review(ReviewViewModel vm)
 	{
 		this.BindingContext = vm;
 		InitializeComponent();

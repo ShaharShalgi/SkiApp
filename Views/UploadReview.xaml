@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiApp.Views.UploadReview"
+             Title="UploadReview"
+             xmlns:ViewModels="clr-namespace:SkiApp.ViewModels"
+             xmlns:Models="clr-namespace:SkiApp.Models"
+             x:DataType="ViewModels:ReviewViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!--  Title  -->
+            <Label FontSize="Medium" Text="Name" />
+            <Entry
+            x:Name="TitleEntry"
+            Placeholder="Enter Title"
+            Text="{Binding Title}" />
+         
+            <!--  Description  -->
+            <Label FontSize="Medium" Text="Description" />
+            <Editor
+            x:Name="DescriptionEditor"
+            AutoSize="TextChanges"
+            HeightRequest="100"
+            Text="{Binding Txt}" />
+
+            <Picker x:Name="RatingPicker"
+        Title="Rating"
+        BackgroundColor="#f8fafc"
+        SelectedIndex="{Binding Star}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>1⭐</x:String>
+                        <x:String>2⭐</x:String>
+                        <x:String>3⭐</x:String>
+                        <x:String>4⭐</x:String>
+                        <x:String>5⭐</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+
+            <!--  Images  -->
+            <Label FontSize="Medium" Text="Images" />
+            <HorizontalStackLayout x:Name="ImagePreviewStack" Spacing="10" />
+            <CollectionView HeightRequest="120" ItemsSource="{Binding Photos}">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Image Source="no_content.png" HeightRequest="120" WidthRequest="120" Opacity="0.6"/>
+                        <Label Text="Add Images" FontSize="18" TextColor="{AppThemeBinding Light=#5D7290, Dark=#A0B1D7}" 
+           HorizontalOptions="Center" Margin="0,20,0,0"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <Grid RowDefinitions="3*,*">
+
+                            <Frame
+                        Padding="5"
+                        BackgroundColor="#E0F2FE"
+                        CornerRadius="15" Grid.Row="0">
+                                <Image
+                            Margin="5"
+                            HeightRequest="100"
+                            Source="{Binding .}"
+                            WidthRequest="100" />
+
+                            </Frame>
+
+                            <!--<Button Grid.Row="1" BackgroundColor="LightSteelBlue" Text="Delete Image" WidthRequest="200" TextColor="Black"/>-->
+                        </Grid>
+                    </DataTemplate>
+
+
+
+
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button x:Name="AddImagesButton" Text="Add Images" Command="{Binding AddPhotoCommand}"/>
+
+            <!--  Submit Button  -->
+            <Button
+            x:Name="SubmitButton"
+            Margin="0,20,0,0"
+            BackgroundColor="Goldenrod"
+            Text="Post Review"
+            TextColor="White" 
+            Command="{Binding UploadReviewCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

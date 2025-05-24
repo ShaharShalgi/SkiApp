@@ -60,16 +60,55 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <Grid RowDefinitions="Auto,*">
+    <ScrollView>
+        <RefreshView IsRefreshing="{Binding InServerCall}"
+                 Command="{Binding RefreshCommand}">
+            <Grid RowDefinitions="Auto,*">
         <!-- Header Bar -->
         <Grid Grid.Row="0" Padding="20,16" BackgroundColor="{AppThemeBinding Light=White, Dark=#1E2740}">
             <Label Text="Discover" FontSize="28" FontFamily="OpenSansBold" 
                    TextColor="{AppThemeBinding Light=#1A2944, Dark=#E9ECFF}" 
                    HorizontalOptions="Start" VerticalOptions="Center"/>
         </Grid>
+                <Frame Padding="15"
+         BackgroundColor="White"
+         BorderColor="#e2e8f0"
+         CornerRadius="8">
+                    <VerticalStackLayout Spacing="10">
+                        <Label FontAttributes="Bold"
+                 FontSize="18"
+                 Text="Sort By"
+                 TextColor="#334155" />
 
-        <!-- Main Feed Content -->
+                        <Picker x:Name="PricePicker"
+                  Title="Price"
+                  BackgroundColor="#f8fafc"
+                  SelectedIndex="{Binding PriceRange}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Highest to Lowest</x:String>
+                                    <x:String>Lowest to Highest</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        
+                        <Picker x:Name="RatingPicker"
+                    Title="Rating"
+                    BackgroundColor="#f8fafc"
+                    SelectedIndex="{Binding RatingRange}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Highest to Lowest</x:String>
+                                    <x:String>Lowest to Highest</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        <Button Command="{Binding SortCommand}" Text="Sort" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Main Feed Content -->
+        
         <CollectionView Grid.Row="1" ItemsSource="{Binding PostCol}" SelectionMode="None">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
@@ -199,12 +238,15 @@ HorizontalOptions="Center" Margin="0,20,0,0"/>
 
                                 <!-- Interaction buttons with nicer layout -->
                                 <Grid Grid.Row="3" ColumnDefinitions="*,*,*" Padding="8,4,8,14">
-                             
 
-                                    <Button Grid.Column="1" Text="💬 See Reviews" 
-                                            Style="{StaticResource InteractionButtonStyle}" />
 
-                                </Grid>
+                                            <Button Grid.Column="1" 
+                                                    Text="💬 See Reviews" 
+                                                    Style="{StaticResource InteractionButtonStyle}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:CoachesViewModel}}, Path= ViewReviewsCommand}"
+                                                    CommandParameter="{Binding .}" />
+
+                                        </Grid>
                             </Grid>
                         </Frame>
                     </Grid>
@@ -212,4 +254,6 @@ HorizontalOptions="Center" Margin="0,20,0,0"/>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
+    </RefreshView>
+    </ScrollView>
 </ContentPage>
